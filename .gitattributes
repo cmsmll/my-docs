@@ -1,0 +1,20 @@
+# 换行符规范
+#
+# 默认一律 LF：仓库内存储与工作区检出都用 LF。本文件优先于各人机器上的
+# core.autocrlf（Git for Windows 安装器默认设为 true），因此无论谁克隆、
+# 本机怎么配，落到工作区的换行符都一致。
+#
+# 唯一例外是 Windows 脚本：cmd.exe、PowerShell、Windows Script Host 对 LF
+# 换行敏感（批处理的 goto/标签、多行续行符 `^` 在 LF 下会出错），这些扩展名
+# 强制 CRLF。
+
+* text=auto eol=lf
+
+# Windows 脚本：必须 CRLF
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+*.psm1  text eol=crlf
+*.psd1  text eol=crlf
+*.vbs   text eol=crlf
+*.reg   text eol=crlf
