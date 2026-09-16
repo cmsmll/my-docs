@@ -22,9 +22,10 @@
 - 运行时：Node `v24.11.0` / npm `11.6.1`；**`vitepress@2.0.0-alpha.20`** + `@vue/theme@2.4.0`
   （与 Vue 官方文档站同款组合；`@vue/theme` 的 peer 仍写 `^1.2.2`，装依赖会有 peer 警告，属已知）。
   V2 用 Vite 8（rolldown），config 走原生 loader：**相对 import 必须带扩展名**。
-- **远程与分支**：`origin` 指向用户的 GitHub 仓库（`cmsmll/my-docs`），但推送由用户手动管理
-  ——**未获明确指示绝不 push**。`master` 是稳定线，日常工作在 `dev` 分支
-  （`origin/main` 落后于两者，是历史遗留的默认分支名，不必纠正）。
+- **远程与分支**：远程 `origin`（`cmsmll/my-docs`）**只有 `main` 一个分支**，推送由用户手动管理
+  ——**未获明确指示绝不 push**。本地 `master` **不是远程分支**，是本机 `git init` 的默认名
+  （系统级 `init.defaultBranch=master`），它跟踪 `origin/main`；工作分支 `dev` 由 `master` 分出。
+  三者关系与「要不要统一成 `main`」由用户决定，不要自行改名或删除分支。
 
 **工作区不绑定厂商**：现有两个文档集恰好属于同一厂商，但这不是前提。根层（本文、根
 `README.md`、`package.json`）的描述保持中性，只讲「文档集 / 文档中心」；产品信息与所属厂商
@@ -301,9 +302,13 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
   应为干净（或只剩与本次任务无关、用户自己的改动）。
 - **只有用户明确说「提交到远程 / push」时才推送**。默认**绝不**执行 `git push`，也不添加
   remote；远程由用户手动管理。
+  注意本地 `master` 与远程 `main` **名字不一致**，所以裸 `git push` 会直接报
+  `fatal: The upstream branch of your current branch does not match...`（已实测）。
+  这属于**要问用户**的情形（推哪个分支、是否统一命名），不要自行决定推送目标。
 - **一次提交只做一件事**：代码 + 相关文档/脚本同提交，不混入无关改动。
-- **改动都提交到 `dev` 分支**（`dev` 是工作分支，`master` 保持稳定、不要直接在上面提交）。
-  需要大改时先在 `dev` 上做，是否合并回 `master` 由用户决定——**合并同样要用户明确授权**。
+- **工作分支是 `dev`**（由本地 `master` 分出，见第一节；远程只有 `main`）。日常改动的提交都
+  落在 `dev`，**不要**直接提交到 `master`，也**不要**动远程分支。是否把 `dev` 合并回
+  `master`、以及如何与远程 `main` 对齐，由用户决定——**合并与推送同样要用户明确授权**。
 - **提交信息格式：Conventional Commits + 中文说明**。类型用 `feat` / `fix` / `refactor` /
   `docs` / `chore` / `test` / `style` / `perf` / `build` / `ci`，说明用中文：
   - `feat: 新增文档列表页与二级路由`
