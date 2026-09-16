@@ -32,6 +32,7 @@ import DocList from '@theme/components/DocList.vue'
   line-height: 1.25;
   font-weight: 900;
   letter-spacing: -1px;
+  max-width: var(--doc-layout-width);
   margin: 0 auto;
   background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
   background-clip: text;
@@ -40,16 +41,16 @@ import DocList from '@theme/components/DocList.vue'
 }
 
 .description {
-  max-width: 720px;
+  max-width: var(--doc-layout-width);
   line-height: 1.6;
   color: var(--vt-c-text-2);
   font-size: 18px;
   margin: 18px auto 0;
 }
 
-/* 与文档集首页一致：内容收进 1152px 居中容器，文字左对齐 */
+/* 与文档集首页共用同一个内容宽度，文字左对齐 */
 .home-doc-wrap {
-  max-width: 1152px;
+  max-width: var(--doc-layout-width);
   margin: 0 auto;
   padding: 0 32px 64px;
 }

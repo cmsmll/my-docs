@@ -123,7 +123,7 @@ section {
   line-height: 1.25;
   font-weight: 900;
   letter-spacing: -1.5px;
-  max-width: 960px;
+  max-width: var(--doc-layout-width);
   margin: 0 auto;
 }
 
@@ -136,7 +136,7 @@ html:not(.dark) .accent,
 }
 
 .description {
-  max-width: 960px;
+  max-width: var(--doc-layout-width);
   line-height: 1.5;
   color: var(--vt-c-text-2);
   transition: color 0.5s;
@@ -208,14 +208,14 @@ html:not(.dark) .accent,
 }
 
 #highlights {
-  max-width: 1152px;
+  max-width: var(--doc-layout-width);
   margin: 0 auto;
 }
 
-/* 简介 / 版本记录：收进与上方卡片相同的 1152px 居中容器，
-   文字保持左对齐（原先铺满 1440px，与 hero、卡片都不对齐）。 */
+/* 简介 / 版本记录：与上方 hero 文字、卡片区共用同一个内容宽度，
+   文字保持左对齐。 */
 .home-doc-wrap {
-  max-width: 1152px;
+  max-width: var(--doc-layout-width);
   margin: 0 auto;
   padding: 0 32px;
 }
