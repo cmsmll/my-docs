@@ -72,8 +72,8 @@ document/
       ├─ docs-registry.ts               文档集注册表（全站唯一真源）
       ├─ sidebar-supermind.json         生成物（勿手改）
       └─ theme/
-         ├─ index.ts        主题入口（navbar-title 换成站点标题）
-         ├─ custom.css      补丁样式（--vp-* 变量补齐、表格、打印）
+         ├─ index.ts        主题入口（navbar-title 换站点标题；按路由挂 .doc-home）
+         ├─ custom.css      补丁样式（--vp-* 补齐、首页 header 三栏、表格、打印）
          └─ components/
             ├─ DocList.vue  根页文档列表卡片（读 docs-registry.ts）
             └─ Home.vue     文档集首页（hero/卡片/表格，数据由各集合传入）
@@ -151,7 +151,28 @@ handler 里带着 `await scanForBuild()`，**索引就是在那一步扫出来�
 各 locale 的索引会变成空的 `{}`（32 字节），搜索彻底失效。另外 root 的 loader 只能遍历
 「各文档集」loader，不能遍历最终导出的映射对象自身，否则无限递归。
 
-### 3.5 主题能力边界
+### 3.5 首页 header 的三栏布局（与文档集页面隔离）
+
+首页 header 是三栏：左品牌（「文档中心」原宽度）+ 中间居中搜索框 + 右侧仅主题按钮，**无导航
+菜单**。两个文档集页面与内容页的 header 必须保持主题原样，隔离是硬要求。
+
+- 判据用 `.VPApp.doc-home`，由 `theme/index.ts` 按路由挂（仅 `/`，兼容 `/index.html`）。
+  **不要**改用主题的 `.VPContentPage`：它同时命中根页与两个文档集首页，无法区分；VitePress 2
+  也不消费 `frontmatter.pageClass`。用类而非 CSS `:has()`，是为了让 header 样式不依赖内容区组件结构。
+- **所有首页 header 规则都必须带 `.VPApp.doc-home` 前缀**，这是隔离的唯一保证。
+- **居中靠 grid 等宽轨道**：`.container` 用 `grid-template-columns: minmax(0,1fr) auto minmax(0,1fr)`，
+  左右两轨由布局保证等宽，中间搜索框自然居中。用主题的 `flex + space-between` 时搜索框位置取决于
+  右侧按钮宽度，**必然偏移**。为把搜索框单独放进中间格，`.content` 设为 `display: contents`。
+- **导航栏左右内边距必须对称**：主题是按「左对齐品牌 + 右对齐按钮」设计的，左右不等（`24/12`，
+  `≥768px` 为 `32/12`），会让容器中心偏离视口中心 `(左-右)/2`。首页用左右同值。
+- 两处易漏：品牌区需 `justify-self: start`，否则作为 grid 格子会拉伸到整条 `1fr` 轨道，
+  **左侧 1/3 全变成回首页链接**；主题在 `<1280px` 隐藏主题按钮（改在「更多」浮层里），
+  首页要无视该断点始终显示，否则窄屏无法切换主题。
+
+验证方式：`getBoundingClientRect()` 量 `.VPNavBar .container` 中心与 `.VPNavBarSearch` 中心是否
+相等（1440/1280/1024/768/375 五个宽度），并确认文档集页面 `.container` 仍是 `flex`、菜单仍在。
+
+### 3.6 主题能力边界
 
 - **侧边栏只有两级**：`@vue/theme` 的 `VPSidebarGroup` 只渲染「分组标题 + 平铺链接」，不支持
   再嵌套。写三层会渲染成**无 `href` 的假链接、页面全部丢失**。需要多个子分组时，把它们作为
@@ -164,7 +185,7 @@ handler 里带着 `await scanForBuild()`，**索引就是在那一步扫出来�
   引入时要**展开到顶层**（`...sidebarSupermind`）。
 - **大纲只收 level 2..4**：页内标题必须从 `##` 起，否则右侧「本页内容」是空的。
 
-### 3.6 路径不得依赖 cwd
+### 3.7 路径不得依赖 cwd
 
 不要用 `path.resolve('node_modules/...')` 这类相对 cwd 的写法；用
 `createRequire(import.meta.url)` 或 `fileURLToPath(import.meta.url)` 定位。config 里已按此实现。
@@ -310,6 +331,9 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 - [ ] 若动了主题配置：**导航栏搜索框存在**、弹窗有背景与边框（验证搜索别名与 `--vp-*` 补齐）
 - [ ] 各文档集首页 `/ifind/`、`/supermind/` 是**纯落地页**：有 hero，**没有侧边栏**
 - [ ] 若动了导航/侧边栏：侧边栏链接可点（无 `href` 的假链接 = 层级超两级或键值是映射）
+- [ ] 若动了 header：首页 `/` 三栏成立（搜索框中心 == `.container` 中心，左右两轨等宽，
+      **无导航菜单**、主题按钮可见）；`/ifind/`、`/supermind/` 与内容页 header 仍是主题原样
+      （`.container` 为 `flex`、菜单条目完整）
 - [ ] 代码块仍为深底 `#24292e` / 字色 `#e1e4e8`；iFinD 的 `{周期1}` 文本完整可见
 - [ ] 正文站内链接都带文档集前缀
 - [ ] `git status` 干净，改动已按 5.1 提交
