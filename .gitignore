@@ -6,6 +6,10 @@ node_modules/
 **/docs/.vitepress/cache/
 dist/
 
+# Python 转换脚本的字节码缓存
+__pycache__/
+*.pyc
+
 # 杂项
 *.log
 .DS_Store

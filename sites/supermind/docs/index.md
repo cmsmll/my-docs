@@ -13,7 +13,7 @@ const home = {
   description:
     '同花顺 SuperMind 量化投资交易平台官方帮助文档网页版：策略 API、回测引擎、因子研究、模拟仿真、研究环境、智能交易与常见问题。内容由官方帮助中心结构化转换，未增删事实。',
   actions: [
-    { text: '快速开始', link: '/guide/local-sdk/yi-qian-yan', kind: 'primary' },
+    { text: '快速开始', link: '/guide/other/yi-qian-yan', kind: 'primary' },
     { text: 'API 文档', link: '/reference/api/zhong-yao-xie-zai-zui-qian-mian', kind: 'secondary' },
     { text: '常见问题', link: '/guide/faq/guan-yu-supermind', kind: 'secondary' },
   ],
@@ -35,9 +35,10 @@ const home = {
   intro:
     'SuperMind 是同花顺旗下的量化投资交易平台，提供高质海量的金融数据、零延迟的回测引擎与最接近真实市场环境的仿真交易平台，支持 Python 策略开发。',
   versionsTitle: '文档分区',
+  tableHead: ['分区', '内容', '说明'],
   versions: [
-    { version: '本地SDK', date: '本地部署', note: '申请条件、流程与注意事项' },
     { version: 'API 文档', date: '接口参考', note: '策略常用接口与对象' },
+    { version: '其他', date: '环境与资源', note: '本地SDK、模拟仿真、研究环境/实盘、因子数据产品' },
     { version: 'AI Lab', date: 'AI 赋能', note: '研报复现、量化实验室与表达式写法' },
     { version: '智能交易', date: '客户端', note: '智能交易系统功能说明书' },
   ],

@@ -113,7 +113,7 @@ title: "问财接口"
 
 ## 问财接口是否支持本地接口调用？
 
-不支持。supermind 中只有极少的数据支持本地接口调用，详见：[https://quant.10jqka.com.cn/view/help/3](/guide/local-sdk/yi-qian-yan)
+不支持。supermind 中只有极少的数据支持本地接口调用，详见：[https://quant.10jqka.com.cn/view/help/3](/guide/other/yi-qian-yan)
 
 ## 市面ZUI全！一文讲透问财语句深度使用技巧（含50个案例）
 

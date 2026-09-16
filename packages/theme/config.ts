@@ -24,34 +24,6 @@ const vpTheme = path.join(
 // 避免依赖 cwd 或 npm 的依赖提升布局。
 const themeRoot = path.dirname(fileURLToPath(import.meta.url))
 
-export interface HomeAction {
-  text: string
-  link: string
-  /** primary 为主按钮（品牌色实底），secondary 为次按钮（浅底） */
-  kind?: 'primary' | 'secondary'
-}
-
-export interface HomeVersion {
-  version: string
-  date: string
-  note: string
-}
-
-/** 首页文案与数据。布局与样式在共享的 Home.vue 中，此处只放各站不同的内容。 */
-export interface HomeData {
-  /** 标题第二行（品牌名，渲染为渐变强调色） */
-  accent: string
-  /** 标题第一行 */
-  tagline: string
-  description: string
-  actions: HomeAction[]
-  highlights: { title: string; text: string }[]
-  introTitle: string
-  intro: string
-  versionsTitle: string
-  versions: HomeVersion[]
-}
-
 export interface SiteData {
   title: string
   description: string
@@ -62,8 +34,6 @@ export interface SiteData {
   navTitle?: string
   /** 品牌区标题的 CSS 类名，默认共享样式里的 .doc-site-title */
   navTitleClass?: string
-  /** 站点首页文案。页面以 `page: true` + `<Home v-bind="..." />` 使用 */
-  home?: HomeData
   /** 正文是否包含 LaTeX 公式。开启需安装 markdown-it-mathjax3 */
   math?: boolean
 }

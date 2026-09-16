@@ -68,7 +68,7 @@ title: "Supermind支持实盘运行"
   )
   ```
 
-`research_trade`接口文档[详见](/guide/research-env/nei-zhi-jie-kou#模拟仿真-research-trade)
+`research_trade`接口文档[详见](/guide/other/nei-zhi-jie-kou#模拟仿真-research-trade)
 
 ***`trade_api=TradeAPI('69271711',order_policy=LimitPolicy)` 中的账号是模拟资金账号或者是实盘资金账号。***
 
@@ -265,7 +265,7 @@ def handle_bar(context):
 #### 问题七：实现秒级别频率的策略交易
 
 * 可能导致的问题：
-  * “量化实盘”环境虽然能丝滑便捷的实现“策略回测”一键上实盘，但同时也存在一些限制，如[signal_mode的参数设置](/guide/research-env/nei-zhi-jie-kou#模拟仿真-research-trade)，以及只支持日频/分钟频的策略。
+  * “量化实盘”环境虽然能丝滑便捷的实现“策略回测”一键上实盘，但同时也存在一些限制，如[signal_mode的参数设置](/guide/other/nei-zhi-jie-kou#模拟仿真-research-trade)，以及只支持日频/分钟频的策略。
 * 解决方案：
   * 在“研究环境”环境提供更高的自由度，但对代码的能力要求也更高。用户可以自行搭建策略框架实现秒级别策略交易。
   * 也可以通过调用[handle_tick函数](/reference/api/ji-ben-han-shu#tick行情数据变化时调用-handle-tick)实现，注意：使用该函数必需先通过[subscribe](/reference/api/shu-ju-han-shu#订阅标的-subscribe)订阅标的行情，且在订阅标的有tick行情更新时触发策略执行。
@@ -341,10 +341,10 @@ rtrade = research_trade(
 
 ## 每个账号实盘可以开几个策略？
 
-supermind不限制策略个数，但是会被内存约束，一般用户2G内存，可以运行3-4个策略，一般一个策略是500M内存占用。如果要升级内存可以看下这里：[内存不够怎么办？](/guide/research-env/yan-jiu-huan-jing-de-shi-yong#云端2g内存-不够怎么办)
+supermind不限制策略个数，但是会被内存约束，一般用户2G内存，可以运行3-4个策略，一般一个策略是500M内存占用。如果要升级内存可以看下这里：[内存不够怎么办？](/guide/other/yan-jiu-huan-jing-de-shi-yong#云端2g内存-不够怎么办)
 
 但要注意 如果在一个资金账号下运行多个策略，需要处理策略之间的持仓冲突问题。
 
 ## 实盘注意必须开着客户端 并确保研究环境正常运行
 
-* [研究环境关闭规则 点击这里](/guide/research-env/yan-jiu-huan-jing-de-shi-yong#研究环境关闭规则)
+* [研究环境关闭规则 点击这里](/guide/other/yan-jiu-huan-jing-de-shi-yong#研究环境关闭规则)

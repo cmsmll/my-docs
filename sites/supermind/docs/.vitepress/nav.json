@@ -10,14 +10,9 @@
     "activeMatch": "^/guide/backtest-engine/"
   },
   {
-    "text": "模拟仿真",
-    "link": "/guide/simulation/mo-ni-jiao-yi",
-    "activeMatch": "^/guide/simulation/"
-  },
-  {
-    "text": "研究环境/实盘",
-    "link": "/guide/research-env/index",
-    "activeMatch": "^/guide/research-env/"
+    "text": "其他",
+    "link": "/guide/other/mo-ni-jiao-yi",
+    "activeMatch": "^/guide/other/"
   },
   {
     "text": "API 文档",
@@ -25,22 +20,12 @@
     "activeMatch": "^/reference/api/"
   },
   {
-    "text": "本地SDK",
-    "link": "/guide/local-sdk/yi-qian-yan",
-    "activeMatch": "^/guide/local-sdk/"
-  },
-  {
     "text": "常见问题",
     "link": "/guide/faq/guan-yu-supermind",
     "activeMatch": "^/guide/faq/"
   },
   {
-    "text": "因子数据产品",
-    "link": "/reference/factor-product/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu",
-    "activeMatch": "^/reference/factor-product/"
-  },
-  {
-    "text": "智能交易在线文档",
+    "text": "智能交易",
     "link": "/guide/smart-trading/index",
     "activeMatch": "^/guide/smart-trading/"
   },

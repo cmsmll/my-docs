@@ -1,4 +1,284 @@
 {
+  "/guide/other/": [
+    {
+      "text": "模拟仿真",
+      "items": [
+        {
+          "text": "模拟交易",
+          "link": "/guide/other/mo-ni-jiao-yi",
+          "items": [
+            {
+              "text": "新建模拟交易（客户端：菜单路径：量化交易-模拟交易-新建模拟交易）",
+              "link": "/guide/other/mo-ni-jiao-yi#新建模拟交易-客户端-菜单路径-量化交易-模拟交易-新建模拟交易"
+            },
+            {
+              "text": "暂停模拟交易",
+              "link": "/guide/other/mo-ni-jiao-yi#暂停模拟交易"
+            },
+            {
+              "text": "删除模拟交易",
+              "link": "/guide/other/mo-ni-jiao-yi#删除模拟交易"
+            },
+            {
+              "text": "模拟交易收益走势",
+              "link": "/guide/other/mo-ni-jiao-yi#模拟交易收益走势"
+            },
+            {
+              "text": "模拟交易交易明细",
+              "link": "/guide/other/mo-ni-jiao-yi#模拟交易交易明细"
+            },
+            {
+              "text": "模拟交易持仓情况",
+              "link": "/guide/other/mo-ni-jiao-yi#模拟交易持仓情况"
+            },
+            {
+              "text": "模拟交易策略代码",
+              "link": "/guide/other/mo-ni-jiao-yi#模拟交易策略代码"
+            },
+            {
+              "text": "模拟交易运行日志",
+              "link": "/guide/other/mo-ni-jiao-yi#模拟交易运行日志"
+            },
+            {
+              "text": "模拟交易更换代码",
+              "link": "/guide/other/mo-ni-jiao-yi#模拟交易更换代码"
+            },
+            {
+              "text": "模拟交易查看更换记录",
+              "link": "/guide/other/mo-ni-jiao-yi#模拟交易查看更换记录"
+            },
+            {
+              "text": "模拟交易机制",
+              "link": "/guide/other/mo-ni-jiao-yi#模拟交易机制"
+            },
+            {
+              "text": "模拟交易消息推送",
+              "link": "/guide/other/mo-ni-jiao-yi#模拟交易消息推送"
+            }
+          ],
+          "collapsed": true
+        },
+        {
+          "text": "仿真柜台",
+          "link": "/guide/other/fang-zhen-gui-tai",
+          "items": [
+            {
+              "text": "仿真柜台介绍",
+              "link": "/guide/other/fang-zhen-gui-tai#仿真柜台介绍"
+            },
+            {
+              "text": "使用流程",
+              "link": "/guide/other/fang-zhen-gui-tai#使用流程"
+            },
+            {
+              "text": "回测代码直接 仿真/实盘交易 只需一分钟！",
+              "link": "/guide/other/fang-zhen-gui-tai#回测代码直接-仿真-实盘交易-只需一分钟"
+            },
+            {
+              "text": "策略仿真/实盘与策略回测中的差异问题以及解决方案",
+              "link": "/guide/other/fang-zhen-gui-tai#策略仿真-实盘与策略回测中的差异问题以及解决方案"
+            }
+          ],
+          "collapsed": true
+        }
+      ]
+    },
+    {
+      "text": "研究环境/实盘",
+      "items": [
+        {
+          "text": "研究环境/实盘",
+          "link": "/guide/other/index"
+        },
+        {
+          "text": "社区交流",
+          "link": "/guide/other/she-qu-jiao-liu"
+        },
+        {
+          "text": "研究环境的本质",
+          "link": "/guide/other/yan-jiu-huan-jing-de-ben-zhi"
+        },
+        {
+          "text": "Supermind支持实盘运行",
+          "link": "/guide/other/supermind-zhi-chi-shi-pan-yun-xing",
+          "items": [
+            {
+              "text": "【重要！！】写在最前面",
+              "link": "/guide/other/supermind-zhi-chi-shi-pan-yun-xing#【重要-】写在最前面"
+            },
+            {
+              "text": "【重磅更新】回测代码直接实盘交易 只需一分钟！",
+              "link": "/guide/other/supermind-zhi-chi-shi-pan-yun-xing#【重磅更新】回测代码直接实盘交易-只需一分钟"
+            },
+            {
+              "text": "SuperMind 1分钟快速实盘 入门教程",
+              "link": "/guide/other/supermind-zhi-chi-shi-pan-yun-xing#supermind-1分钟快速实盘-入门教程"
+            },
+            {
+              "text": "仿真/实盘与回测的差异以及解决方案",
+              "link": "/guide/other/supermind-zhi-chi-shi-pan-yun-xing#仿真-实盘与回测的差异以及解决方案"
+            },
+            {
+              "text": "每个账号实盘可以开几个策略？",
+              "link": "/guide/other/supermind-zhi-chi-shi-pan-yun-xing#每个账号实盘可以开几个策略"
+            },
+            {
+              "text": "实盘注意必须开着客户端 并确保研究环境正常运行",
+              "link": "/guide/other/supermind-zhi-chi-shi-pan-yun-xing#实盘注意必须开着客户端-并确保研究环境正常运行"
+            }
+          ],
+          "collapsed": true
+        },
+        {
+          "text": "内置接口",
+          "link": "/guide/other/nei-zhi-jie-kou",
+          "items": [
+            {
+              "text": "数据接口",
+              "link": "/guide/other/nei-zhi-jie-kou#数据接口"
+            },
+            {
+              "text": "仿真交易接口 - `TradeAPI`",
+              "link": "/guide/other/nei-zhi-jie-kou#仿真交易接口-tradeapi"
+            },
+            {
+              "text": "因子检验",
+              "link": "/guide/other/nei-zhi-jie-kou#因子检验"
+            },
+            {
+              "text": "策略回测 - research_strategy",
+              "link": "/guide/other/nei-zhi-jie-kou#策略回测-research-strategy"
+            },
+            {
+              "text": "模拟仿真 - research_trade",
+              "link": "/guide/other/nei-zhi-jie-kou#模拟仿真-research-trade"
+            }
+          ],
+          "collapsed": true
+        },
+        {
+          "text": "研究环境的使用",
+          "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong",
+          "items": [
+            {
+              "text": "储存资源",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#储存资源"
+            },
+            {
+              "text": "研究环境关闭规则",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#研究环境关闭规则"
+            },
+            {
+              "text": "研究环境如何关闭？",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#研究环境如何关闭"
+            },
+            {
+              "text": "定时任务Crontab",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#定时任务crontab"
+            },
+            {
+              "text": "实盘可以云端托管么？",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#实盘可以云端托管么"
+            },
+            {
+              "text": "可以实现完全无人值守么？我可以一直不用管运行的程序么？",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#可以实现完全无人值守么-我可以一直不用管运行的程序么"
+            },
+            {
+              "text": "我可以申请超过7天么？",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#我可以申请超过7天么"
+            },
+            {
+              "text": "为什么研究环境报“服务器不可用或无法访问”?",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#为什么研究环境报-服务器不可用或无法访问"
+            },
+            {
+              "text": "为什么研究环境卡住不断刷新？",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#为什么研究环境卡住不断刷新"
+            },
+            {
+              "text": "研究环境可以网页运行？",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#研究环境可以网页运行"
+            },
+            {
+              "text": "研究环境的快捷键有哪些？",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#研究环境的快捷键有哪些"
+            },
+            {
+              "text": "为什么会内存爆满？",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#为什么会内存爆满"
+            },
+            {
+              "text": "云端2G内存，不够怎么办？",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#云端2g内存-不够怎么办"
+            },
+            {
+              "text": "为什么不能使用os,sys等包",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#为什么不能使用os-sys等包"
+            },
+            {
+              "text": "怎么获取userid",
+              "link": "/guide/other/yan-jiu-huan-jing-de-shi-yong#怎么获取userid"
+            }
+          ],
+          "collapsed": true
+        }
+      ]
+    },
+    {
+      "text": "本地SDK",
+      "items": [
+        {
+          "text": "一、前言",
+          "link": "/guide/other/yi-qian-yan"
+        },
+        {
+          "text": "二、申请条件",
+          "link": "/guide/other/er-shen-qing-tiao-jian"
+        },
+        {
+          "text": "三、申请流程",
+          "link": "/guide/other/san-shen-qing-liu-cheng"
+        },
+        {
+          "text": "四、注意事项",
+          "link": "/guide/other/si-zhu-yi-shi-xiang"
+        }
+      ]
+    },
+    {
+      "text": "因子数据产品",
+      "items": [
+        {
+          "text": "1 同花顺因子产品使用说明书",
+          "link": "/guide/other/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu",
+          "items": [
+            {
+              "text": "1.1 因子库产品的权限开通",
+              "link": "/guide/other/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-1-因子库产品的权限开通"
+            },
+            {
+              "text": "1.2 因子产品SFTP账号获取",
+              "link": "/guide/other/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-2-因子产品sftp账号获取"
+            },
+            {
+              "text": "1.3 因子产品如何使用？",
+              "link": "/guide/other/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-3-因子产品如何使用"
+            },
+            {
+              "text": "1.4 因子库的目录结构：",
+              "link": "/guide/other/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-4-因子库的目录结构"
+            },
+            {
+              "text": "1.5 常见问题",
+              "link": "/guide/other/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-5-常见问题"
+            }
+          ],
+          "collapsed": true
+        }
+      ]
+    }
+  ],
   "/guide/factor-research/": [
     {
       "text": "因子研究",
@@ -529,235 +809,6 @@
       ]
     }
   ],
-  "/guide/simulation/": [
-    {
-      "text": "模拟仿真",
-      "items": [
-        {
-          "text": "模拟交易",
-          "link": "/guide/simulation/mo-ni-jiao-yi",
-          "items": [
-            {
-              "text": "新建模拟交易（客户端：菜单路径：量化交易-模拟交易-新建模拟交易）",
-              "link": "/guide/simulation/mo-ni-jiao-yi#新建模拟交易-客户端-菜单路径-量化交易-模拟交易-新建模拟交易"
-            },
-            {
-              "text": "暂停模拟交易",
-              "link": "/guide/simulation/mo-ni-jiao-yi#暂停模拟交易"
-            },
-            {
-              "text": "删除模拟交易",
-              "link": "/guide/simulation/mo-ni-jiao-yi#删除模拟交易"
-            },
-            {
-              "text": "模拟交易收益走势",
-              "link": "/guide/simulation/mo-ni-jiao-yi#模拟交易收益走势"
-            },
-            {
-              "text": "模拟交易交易明细",
-              "link": "/guide/simulation/mo-ni-jiao-yi#模拟交易交易明细"
-            },
-            {
-              "text": "模拟交易持仓情况",
-              "link": "/guide/simulation/mo-ni-jiao-yi#模拟交易持仓情况"
-            },
-            {
-              "text": "模拟交易策略代码",
-              "link": "/guide/simulation/mo-ni-jiao-yi#模拟交易策略代码"
-            },
-            {
-              "text": "模拟交易运行日志",
-              "link": "/guide/simulation/mo-ni-jiao-yi#模拟交易运行日志"
-            },
-            {
-              "text": "模拟交易更换代码",
-              "link": "/guide/simulation/mo-ni-jiao-yi#模拟交易更换代码"
-            },
-            {
-              "text": "模拟交易查看更换记录",
-              "link": "/guide/simulation/mo-ni-jiao-yi#模拟交易查看更换记录"
-            },
-            {
-              "text": "模拟交易机制",
-              "link": "/guide/simulation/mo-ni-jiao-yi#模拟交易机制"
-            },
-            {
-              "text": "模拟交易消息推送",
-              "link": "/guide/simulation/mo-ni-jiao-yi#模拟交易消息推送"
-            }
-          ],
-          "collapsed": true
-        },
-        {
-          "text": "仿真柜台",
-          "link": "/guide/simulation/fang-zhen-gui-tai",
-          "items": [
-            {
-              "text": "仿真柜台介绍",
-              "link": "/guide/simulation/fang-zhen-gui-tai#仿真柜台介绍"
-            },
-            {
-              "text": "使用流程",
-              "link": "/guide/simulation/fang-zhen-gui-tai#使用流程"
-            },
-            {
-              "text": "回测代码直接 仿真/实盘交易 只需一分钟！",
-              "link": "/guide/simulation/fang-zhen-gui-tai#回测代码直接-仿真-实盘交易-只需一分钟"
-            },
-            {
-              "text": "策略仿真/实盘与策略回测中的差异问题以及解决方案",
-              "link": "/guide/simulation/fang-zhen-gui-tai#策略仿真-实盘与策略回测中的差异问题以及解决方案"
-            }
-          ],
-          "collapsed": true
-        }
-      ]
-    }
-  ],
-  "/guide/research-env/": [
-    {
-      "text": "研究环境/实盘",
-      "items": [
-        {
-          "text": "研究环境/实盘",
-          "link": "/guide/research-env/index"
-        },
-        {
-          "text": "社区交流",
-          "link": "/guide/research-env/she-qu-jiao-liu"
-        },
-        {
-          "text": "研究环境的本质",
-          "link": "/guide/research-env/yan-jiu-huan-jing-de-ben-zhi"
-        },
-        {
-          "text": "Supermind支持实盘运行",
-          "link": "/guide/research-env/supermind-zhi-chi-shi-pan-yun-xing",
-          "items": [
-            {
-              "text": "【重要！！】写在最前面",
-              "link": "/guide/research-env/supermind-zhi-chi-shi-pan-yun-xing#【重要-】写在最前面"
-            },
-            {
-              "text": "【重磅更新】回测代码直接实盘交易 只需一分钟！",
-              "link": "/guide/research-env/supermind-zhi-chi-shi-pan-yun-xing#【重磅更新】回测代码直接实盘交易-只需一分钟"
-            },
-            {
-              "text": "SuperMind 1分钟快速实盘 入门教程",
-              "link": "/guide/research-env/supermind-zhi-chi-shi-pan-yun-xing#supermind-1分钟快速实盘-入门教程"
-            },
-            {
-              "text": "仿真/实盘与回测的差异以及解决方案",
-              "link": "/guide/research-env/supermind-zhi-chi-shi-pan-yun-xing#仿真-实盘与回测的差异以及解决方案"
-            },
-            {
-              "text": "每个账号实盘可以开几个策略？",
-              "link": "/guide/research-env/supermind-zhi-chi-shi-pan-yun-xing#每个账号实盘可以开几个策略"
-            },
-            {
-              "text": "实盘注意必须开着客户端 并确保研究环境正常运行",
-              "link": "/guide/research-env/supermind-zhi-chi-shi-pan-yun-xing#实盘注意必须开着客户端-并确保研究环境正常运行"
-            }
-          ],
-          "collapsed": true
-        },
-        {
-          "text": "内置接口",
-          "link": "/guide/research-env/nei-zhi-jie-kou",
-          "items": [
-            {
-              "text": "数据接口",
-              "link": "/guide/research-env/nei-zhi-jie-kou#数据接口"
-            },
-            {
-              "text": "仿真交易接口 - `TradeAPI`",
-              "link": "/guide/research-env/nei-zhi-jie-kou#仿真交易接口-tradeapi"
-            },
-            {
-              "text": "因子检验",
-              "link": "/guide/research-env/nei-zhi-jie-kou#因子检验"
-            },
-            {
-              "text": "策略回测 - research_strategy",
-              "link": "/guide/research-env/nei-zhi-jie-kou#策略回测-research-strategy"
-            },
-            {
-              "text": "模拟仿真 - research_trade",
-              "link": "/guide/research-env/nei-zhi-jie-kou#模拟仿真-research-trade"
-            }
-          ],
-          "collapsed": true
-        },
-        {
-          "text": "研究环境的使用",
-          "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong",
-          "items": [
-            {
-              "text": "储存资源",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#储存资源"
-            },
-            {
-              "text": "研究环境关闭规则",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#研究环境关闭规则"
-            },
-            {
-              "text": "研究环境如何关闭？",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#研究环境如何关闭"
-            },
-            {
-              "text": "定时任务Crontab",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#定时任务crontab"
-            },
-            {
-              "text": "实盘可以云端托管么？",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#实盘可以云端托管么"
-            },
-            {
-              "text": "可以实现完全无人值守么？我可以一直不用管运行的程序么？",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#可以实现完全无人值守么-我可以一直不用管运行的程序么"
-            },
-            {
-              "text": "我可以申请超过7天么？",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#我可以申请超过7天么"
-            },
-            {
-              "text": "为什么研究环境报“服务器不可用或无法访问”?",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#为什么研究环境报-服务器不可用或无法访问"
-            },
-            {
-              "text": "为什么研究环境卡住不断刷新？",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#为什么研究环境卡住不断刷新"
-            },
-            {
-              "text": "研究环境可以网页运行？",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#研究环境可以网页运行"
-            },
-            {
-              "text": "研究环境的快捷键有哪些？",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#研究环境的快捷键有哪些"
-            },
-            {
-              "text": "为什么会内存爆满？",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#为什么会内存爆满"
-            },
-            {
-              "text": "云端2G内存，不够怎么办？",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#云端2g内存-不够怎么办"
-            },
-            {
-              "text": "为什么不能使用os,sys等包",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#为什么不能使用os-sys等包"
-            },
-            {
-              "text": "怎么获取userid",
-              "link": "/guide/research-env/yan-jiu-huan-jing-de-shi-yong#怎么获取userid"
-            }
-          ],
-          "collapsed": true
-        }
-      ]
-    }
-  ],
   "/reference/api/": [
     {
       "text": "API 文档",
@@ -1248,29 +1299,6 @@
       ]
     }
   ],
-  "/guide/local-sdk/": [
-    {
-      "text": "本地SDK",
-      "items": [
-        {
-          "text": "一、前言",
-          "link": "/guide/local-sdk/yi-qian-yan"
-        },
-        {
-          "text": "二、申请条件",
-          "link": "/guide/local-sdk/er-shen-qing-tiao-jian"
-        },
-        {
-          "text": "三、申请流程",
-          "link": "/guide/local-sdk/san-shen-qing-liu-cheng"
-        },
-        {
-          "text": "四、注意事项",
-          "link": "/guide/local-sdk/si-zhu-yi-shi-xiang"
-        }
-      ]
-    }
-  ],
   "/guide/faq/": [
     {
       "text": "常见问题",
@@ -1595,40 +1623,6 @@
             {
               "text": "进阶-实盘教程",
               "link": "/guide/faq/tui-jian-de-jiao-cheng#进阶-实盘教程"
-            }
-          ],
-          "collapsed": true
-        }
-      ]
-    }
-  ],
-  "/reference/factor-product/": [
-    {
-      "text": "因子数据产品",
-      "items": [
-        {
-          "text": "1 同花顺因子产品使用说明书",
-          "link": "/reference/factor-product/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu",
-          "items": [
-            {
-              "text": "1.1 因子库产品的权限开通",
-              "link": "/reference/factor-product/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-1-因子库产品的权限开通"
-            },
-            {
-              "text": "1.2 因子产品SFTP账号获取",
-              "link": "/reference/factor-product/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-2-因子产品sftp账号获取"
-            },
-            {
-              "text": "1.3 因子产品如何使用？",
-              "link": "/reference/factor-product/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-3-因子产品如何使用"
-            },
-            {
-              "text": "1.4 因子库的目录结构：",
-              "link": "/reference/factor-product/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-4-因子库的目录结构"
-            },
-            {
-              "text": "1.5 常见问题",
-              "link": "/reference/factor-product/1-tong-hua-shun-yin-zi-chan-pin-shi-yong-shuo-ming-shu#_1-5-常见问题"
             }
           ],
           "collapsed": true

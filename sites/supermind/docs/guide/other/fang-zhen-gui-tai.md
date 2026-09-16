@@ -32,7 +32,7 @@ from tick_trade_api.api import TradeAPI
 trade_api = TradeAPI(account_id='84728199') #填入已登录的资金账号
 ```
 
-- 将策略代码以字符串的形式传入`research_trade`函数，并执行，具体可以参考[研究环境-模拟仿真](/guide/research-env/index#模拟仿真)
+- 将策略代码以字符串的形式传入`research_trade`函数，并执行，具体可以参考[研究环境-模拟仿真](/guide/other/index#模拟仿真)
 
 ## 回测代码直接 仿真/实盘交易 只需一分钟！
 

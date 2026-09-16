@@ -35,19 +35,35 @@ from urllib.request import urlopen
 SOURCE_URL = 'https://quant.10jqka.com.cn/view/help/8'
 SPLIT_MAX = 25000      # 单页正文上限，超过则下探一级标题
 
-# 文档 → 输出目录；目录决定 URL 前缀与分区
+# 文档 → 输出目录；目录决定 URL 前缀与分区。
+# 「模拟仿真」「研究环境/实盘」「本地SDK」「因子数据产品」四篇合并为一类「其他」，
+# 共用同一输出目录（侧边栏仍按原来的四个子分组呈现，见 _write_nav、SIDEBAR_GROUPS）。
+MERGED_DIR = 'guide/other'
+MERGED_GROUP_TEXT = '其他'
+
 DOC_LAYOUT = {
-    '本地SDK': 'guide/local-sdk',
+    '本地SDK': 'guide/other',
     'API 文档': 'reference/api',
     '因子研究': 'guide/factor-research',
     '回测引擎': 'guide/backtest-engine',
-    '模拟仿真': 'guide/simulation',
-    '研究环境/实盘': 'guide/research-env',
+    '模拟仿真': 'guide/other',
+    '研究环境/实盘': 'guide/other',
     '常见问题': 'guide/faq',
     '智能交易在线文档': 'guide/smart-trading',
     'AI Lab': 'guide/ai-lab',
-    '因子数据产品': 'reference/factor-product',
+    '因子数据产品': 'guide/other',
 }
+
+# 合并目录下的侧边栏子分组：(文档名, 组标题)。列表顺序即展示顺序。
+SIDEBAR_GROUPS = [
+    ('模拟仿真', '模拟仿真'),
+    ('研究环境/实盘', '研究环境/实盘'),
+    ('本地SDK', '本地SDK'),
+    ('因子数据产品', '因子数据产品'),
+]
+
+# 导航项显示名（与侧边栏分组名不同的少数几处）
+NAV_TEXT = {'智能交易在线文档': '智能交易'}
 
 # 官网帮助页编号 → 文档（用于改写正文里的 /view/help/N 链接）
 HELP_PAGE_DOC = {
@@ -356,11 +372,17 @@ def _rewrite_line(line: str, anchor_map, doc_first_page: dict, current_path: str
 # 输出
 # --------------------------------------------------------------------------- #
 def build_plan(docs):
-    """定页、定路径。返回 [(文档名, 输出目录, [页面])]。"""
+    """定页、定路径。返回 [(文档名, 输出目录, [页面])]。
+
+    文件名去重按**输出目录**做（不是按文档）：合并到同一目录的多篇文档共用
+    命名空间，否则会出现两个同名文件互相覆盖。
+    """
     planned, doc_first_page = [], {}
+    used_by_dir = {}
     for doc_title, doc in docs.items():
         out_dir = DOC_LAYOUT[doc_title]
-        used, pages = set(), []
+        used = used_by_dir.setdefault(out_dir, set())
+        pages = []
         for title, body, level in plan_pages(doc['content']):
             name = doc_title if title is None else title
             base = 'index' if title is None else file_slug(name)
@@ -423,7 +445,15 @@ def main():
 
 
 def _write_nav(planned, docs_dir, written):
-    """导航顺序沿用官网帮助菜单；侧边栏按文档目录分组。"""
+    """生成 nav.json 与 sidebar.json。
+
+    导航顺序沿用官网帮助菜单；合并的四篇（模拟仿真 / 研究环境·实盘 / 本地SDK /
+    因子数据产品）在导航里归为一项「其他」。
+
+    侧边栏：@vue/theme 的侧边栏只有**两级**（分组标题 + 平铺链接，VPSidebarGroup
+    只渲染 items 里的 link，不支持再嵌套），所以四个子分组以「同一目录键下的四个
+    分组」呈现——进入 /guide/other/ 任一面都能看到这四组，组标题即子分组名。
+    """
     children = {}
     for p, body in written:
         children[p['path']] = [
@@ -433,19 +463,40 @@ def _write_nav(planned, docs_dir, written):
             for m in heading_matches(body, 2)
         ]
 
-    nav, sidebar = [], {}
-    for doc_title, out_dir, pages in planned:
-        items = []
+    def items_of(pages):
+        out = []
         for p in pages:
             item = {'text': p['title'], 'link': p['path']}
             if children[p['path']]:
                 item['items'] = children[p['path']]
                 item['collapsed'] = True
-            items.append(item)
-        # 侧边栏按文档目录分组：进入某文档只显示该文档的页面，避免 94 页同时展开
-        sidebar[f'/{out_dir}/'] = [{'text': doc_title, 'items': items}]
-        nav.append({'text': doc_title, 'link': pages[0]['path'],
-                    'activeMatch': '^/' + out_dir + '/'})
+            out.append(item)
+        return out
+
+    by_doc = {doc: pages for doc, _, pages in planned}
+    merged = [d for d, _ in SIDEBAR_GROUPS]
+
+    # 合并目录：四个子分组同挂在一个目录键下
+    sidebar = {
+        f'/{MERGED_DIR}/': [{'text': t, 'items': items_of(by_doc[d])}
+                            for d, t in SIDEBAR_GROUPS]
+    }
+    for doc_title, out_dir, pages in planned:
+        if doc_title in merged:
+            continue
+        sidebar[f'/{out_dir}/'] = [{'text': doc_title, 'items': items_of(pages)}]
+
+    # 导航：合并四篇取首个子分组首页作为入口，位置在「回测引擎」之后（沿用官网菜单顺序）
+    nav = []
+    for doc_title, out_dir, pages in planned:
+        if doc_title in merged:
+            continue
+        nav.append({'text': NAV_TEXT.get(doc_title, doc_title),
+                    'link': pages[0]['path'], 'activeMatch': '^/' + out_dir + '/'})
+        if doc_title == '回测引擎':
+            nav.append({'text': MERGED_GROUP_TEXT,
+                        'link': by_doc[SIDEBAR_GROUPS[0][0]][0]['path'],
+                        'activeMatch': '^/' + MERGED_DIR + '/'})
 
     cfg_dir = docs_dir / '.vitepress'
     cfg_dir.mkdir(parents=True, exist_ok=True)
@@ -453,7 +504,8 @@ def _write_nav(planned, docs_dir, written):
                                       encoding='utf-8')
     (cfg_dir / 'sidebar.json').write_text(json.dumps(sidebar, ensure_ascii=False, indent=2) + '\n',
                                           encoding='utf-8')
-    print(f'导航 {len(nav)} 项，侧边栏 {len(sidebar)} 组 / {len(written)} 页')
+    print(f'导航 {len(nav)} 项（含合并项「{MERGED_GROUP_TEXT}」），'
+          f'侧边栏 {len(sidebar)} 个目录键 / {len(written)} 页')
 
 
 if __name__ == '__main__':

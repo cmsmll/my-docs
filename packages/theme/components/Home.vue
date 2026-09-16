@@ -12,9 +12,12 @@ interface HomeAction {
   kind?: 'primary' | 'secondary'
 }
 
-interface HomeVersion {
+interface HomeRow {
+  /** 首列：版本号 / 分区名 */
   version: string
+  /** 次列：时间 / 类别 */
   date: string
+  /** 末列：更新说明 */
   note: string
 }
 
@@ -28,8 +31,11 @@ defineProps<{
   highlights: { title: string; text: string }[]
   introTitle: string
   intro: string
+  /** 表格小标题 */
   versionsTitle: string
-  versions: HomeVersion[]
+  /** 表格列头，默认「版本 / 时间 / 更新说明」 */
+  tableHead?: [string, string, string]
+  versions: HomeRow[]
 }>()
 </script>
 
@@ -84,9 +90,9 @@ defineProps<{
       <table>
         <thead>
           <tr>
-            <th>版本</th>
-            <th>时间</th>
-            <th>更新说明</th>
+            <th>{{ tableHead?.[0] ?? '版本' }}</th>
+            <th>{{ tableHead?.[1] ?? '时间' }}</th>
+            <th>{{ tableHead?.[2] ?? '更新说明' }}</th>
           </tr>
         </thead>
         <tbody>

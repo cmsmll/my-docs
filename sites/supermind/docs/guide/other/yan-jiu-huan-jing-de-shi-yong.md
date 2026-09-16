@@ -15,7 +15,7 @@ title: "研究环境的使用"
 
 <!--
 
-- 可以通过本地SDK的upload_file函数实现将本地文件上传至SuperMind研究环境，具体请参考[本地SDK-云端环境交互](/guide/local-sdk/yi-qian-yan#云端环境交互)
+- 可以通过本地SDK的upload_file函数实现将本地文件上传至SuperMind研究环境，具体请参考[本地SDK-云端环境交互](/guide/other/yi-qian-yan#云端环境交互)
 -->
 
 ## 研究环境关闭规则
@@ -98,9 +98,9 @@ python3.8 环境关闭研究环境：
 
 1、客户端一直开启。
 
-2、设定好Crontab定时任务，能在盘前自动开启脚本（因为如果用我们的和回测框架开发的策略，盘后会关闭。但如果自己开发的代码 如果能确保一直运行的话 就不需要开启crontab），crontab相关的知识请看：[定时任务](/guide/research-env/yan-jiu-huan-jing-de-shi-yong#定时任务crontab)
+2、设定好Crontab定时任务，能在盘前自动开启脚本（因为如果用我们的和回测框架开发的策略，盘后会关闭。但如果自己开发的代码 如果能确保一直运行的话 就不需要开启crontab），crontab相关的知识请看：[定时任务](/guide/other/yan-jiu-huan-jing-de-shi-yong#定时任务crontab)
 
-3、申请好7天不重启服务器，付费购买之后，您可以向您对接的经理 或者 supermind社群群主申请 7天服务器不重启。（默认情况下是24小时会重启，更多关于服务器重启规则的描述请看：[研究环境存活时间](/guide/research-env/yan-jiu-huan-jing-de-shi-yong#研究环境关闭规则)
+3、申请好7天不重启服务器，付费购买之后，您可以向您对接的经理 或者 supermind社群群主申请 7天服务器不重启。（默认情况下是24小时会重启，更多关于服务器重启规则的描述请看：[研究环境存活时间](/guide/other/yan-jiu-huan-jing-de-shi-yong#研究环境关闭规则)
 
 ## 我可以申请超过7天么？
 

@@ -86,17 +86,28 @@ sites/supermind/
 │  └─ SuperMind.py           同花顺 SuperMind「因子检测」策略模板脚本（原始素材）
 └─ docs/
    ├─ index.md               首页（page: true + 共享 Home 组件，数据在本文件内）
-   ├─ guide/                 本地SDK、因子研究、回测引擎、模拟仿真、研究环境、常见问题、智能交易、AI Lab
-   ├─ reference/             API 文档、因子数据产品
+   ├─ guide/                 因子研究、回测引擎、常见问题、智能交易、AI Lab、other
+   ├─ guide/other/           本地SDK、模拟仿真、研究环境/实盘、因子数据产品（合并为一类「其他」）
+   ├─ reference/             API 文档
    └─ .vitepress/
       ├─ config.mts          站点配置（只写本站身份数据，其余调用 createSiteConfig）
       ├─ theme/index.ts      主题入口（一行：createTheme({ title })）
       ├─ nav.json            导航（由转换脚本按官网帮助菜单顺序生成）
-      └─ sidebar.json        侧边栏（按文档目录分组，由转换脚本生成）
+      └─ sidebar.json        侧边栏（分组由转换脚本生成）
 ```
 
 导航与侧边栏由 `convert_supermind.py` 生成，**不要手改** `nav.json` / `sidebar.json`：
-重跑脚本会覆盖。要调整结构，改脚本里的 `DOC_LAYOUT` 与 `_write_nav`。
+重跑脚本会覆盖。要调整结构，改脚本里的 `DOC_LAYOUT`、`SIDEBAR_GROUPS`、`MERGED_DIR`。
+
+### 板块合并
+
+「模拟仿真」「研究环境/实盘」「本地SDK」「因子数据产品」原来各占一个板块，现合并为一类
+**「其他」**：四篇文档共用输出目录 `guide/other/`（URL 为 `/guide/other/*`），导航里只有
+一个「其他」入口，侧边栏里保留四个子分组（`SIDEBAR_GROUPS` 决定分组与顺序）。
+
+注意 `@vue/theme` 的侧边栏**只有两级**（分组标题 + 平铺链接，`VPSidebarGroup` 不支持再
+嵌套），所以四个子分组是「同一目录键下的四个分组」，而不是「其他 ▸ 子分组 ▸ 页面」的
+三层树——写三层会渲染成无 `href` 的假链接，页面全部丢失。
 
 ## 与 iFinD 站点的关系
 

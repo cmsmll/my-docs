@@ -230,7 +230,7 @@ title: "工具函数"
   
   - `channel='wxpusher'`时，需要先关注公众号：
     ![](http://wxpusher.zjiecode.com/api/qrcode/jGYu4SdkDOTGPRz5ZgZbusvFYq7AfAeBK7DziHDHpytBajgaVoI7VBrHrwxodE5d.jpg)
-  - webhook教程见：[模拟仿真 (10jqka.com.cn)](/guide/simulation/mo-ni-jiao-yi#什么是webhook)
+  - webhook教程见：[模拟仿真 (10jqka.com.cn)](/guide/other/mo-ni-jiao-yi#什么是webhook)
 - 📝示例：
 
 ```python

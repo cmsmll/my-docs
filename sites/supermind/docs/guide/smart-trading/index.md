@@ -95,7 +95,7 @@ title: "智能交易在线文档"
 
 [2.3.1.3 查询交易数据](/guide/smart-trading/pu-tong-jiao-yi#查询交易数据)
 
-[2.3.1.4 撤单](/guide/research-env/nei-zhi-jie-kou#撤单)
+[2.3.1.4 撤单](/guide/other/nei-zhi-jie-kou#撤单)
 
 [2.3.1.4.1 任务撤单](/guide/smart-trading/pu-tong-jiao-yi#任务撤单)
 
@@ -229,7 +229,7 @@ title: "智能交易在线文档"
 
 [2.3.8.5 大宗交易查询](/guide/smart-trading/pu-tong-jiao-yi#大宗交易查询)
 
-[2.4 篮子交易](/guide/research-env/nei-zhi-jie-kou#篮子交易)
+[2.4 篮子交易](/guide/other/nei-zhi-jie-kou#篮子交易)
 
 [2.4.1 功能简述](/guide/smart-trading/shou-ye#功能简述)
 
@@ -279,7 +279,7 @@ title: "智能交易在线文档"
 
 [2.4.5.2.2 交易策略](/guide/smart-trading/lan-zi-jiao-yi#交易策略)
 
-[2.4.5.2.2.1 算法交易](/guide/research-env/nei-zhi-jie-kou#算法交易)
+[2.4.5.2.2.1 算法交易](/guide/other/nei-zhi-jie-kou#算法交易)
 
 [2.4.5.2.2.2 定时追撤单](/guide/smart-trading/lan-zi-jiao-yi#定时追撤单)
 
@@ -799,25 +799,25 @@ title: "智能交易在线文档"
 
 [2.8.6.1 新建模拟交易](/guide/smart-trading/liang-hua-jiao-yi#新建模拟交易)
 
-[2.8.6.2 暂停模拟交易](/guide/simulation/mo-ni-jiao-yi#暂停模拟交易)
+[2.8.6.2 暂停模拟交易](/guide/other/mo-ni-jiao-yi#暂停模拟交易)
 
-[2.8.6.3 删除模拟交易](/guide/simulation/mo-ni-jiao-yi#删除模拟交易)
+[2.8.6.3 删除模拟交易](/guide/other/mo-ni-jiao-yi#删除模拟交易)
 
-[2.8.6.4 模拟交易收益走势](/guide/simulation/mo-ni-jiao-yi#模拟交易收益走势)
+[2.8.6.4 模拟交易收益走势](/guide/other/mo-ni-jiao-yi#模拟交易收益走势)
 
-[2.8.6.5 模拟交易交易明细](/guide/simulation/mo-ni-jiao-yi#模拟交易交易明细)
+[2.8.6.5 模拟交易交易明细](/guide/other/mo-ni-jiao-yi#模拟交易交易明细)
 
-[2.8.6.6 模拟交易持仓情况](/guide/simulation/mo-ni-jiao-yi#模拟交易持仓情况)
+[2.8.6.6 模拟交易持仓情况](/guide/other/mo-ni-jiao-yi#模拟交易持仓情况)
 
-[2.8.6.7 模拟交易策略代码](/guide/simulation/mo-ni-jiao-yi#模拟交易策略代码)
+[2.8.6.7 模拟交易策略代码](/guide/other/mo-ni-jiao-yi#模拟交易策略代码)
 
-[2.8.6.8 模拟交易运行日志](/guide/simulation/mo-ni-jiao-yi#模拟交易运行日志)
+[2.8.6.8 模拟交易运行日志](/guide/other/mo-ni-jiao-yi#模拟交易运行日志)
 
-[2.8.6.9 模拟交易更换代码](/guide/simulation/mo-ni-jiao-yi#模拟交易更换代码)
+[2.8.6.9 模拟交易更换代码](/guide/other/mo-ni-jiao-yi#模拟交易更换代码)
 
-[2.8.6.10 模拟交易查看更换记录](/guide/simulation/mo-ni-jiao-yi#模拟交易查看更换记录)
+[2.8.6.10 模拟交易查看更换记录](/guide/other/mo-ni-jiao-yi#模拟交易查看更换记录)
 
-[2.8.6.11 模拟交易机制](/guide/simulation/mo-ni-jiao-yi#模拟交易机制)
+[2.8.6.11 模拟交易机制](/guide/other/mo-ni-jiao-yi#模拟交易机制)
 
 [2.8.7 量化常见问题](/guide/smart-trading/liang-hua-jiao-yi#量化常见问题)
 
