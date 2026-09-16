@@ -3,7 +3,7 @@
  * 文档列表卡片。数据来自 docs-registry.ts（全站唯一真源），
  * 新增文档集只改注册表，这里与列表页都无需改动。
  */
-import { collections } from '../../docs-registry'
+import { collections } from '../../docs-registry.ts'
 </script>
 
 <template>

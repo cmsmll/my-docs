@@ -19,7 +19,9 @@
 
 - 形态：**单站点**（不是多站点、不是 workspaces）。一个 `package.json`、一个 dev server、
   一次构建、一份 dist。主题就是 `docs/.vitepress/theme/`，没有共享包。
-- 运行时：Node `v24.11.0` / npm `11.6.1`；`vitepress@1.6.4` + `@vue/theme@2.4.0`。
+- 运行时：Node `v24.11.0` / npm `11.6.1`；**`vitepress@2.0.0-alpha.20`** + `@vue/theme@2.4.0`
+  （与 Vue 官方文档站同款组合；`@vue/theme` 的 peer 仍写 `^1.2.2`，装依赖会有 peer 警告，属已知）。
+  V2 用 Vite 8（rolldown），config 走原生 loader：**相对 import 必须带扩展名**。
 - **非** git 远程托管项目（origin 指向用户的 GitHub 仓库，但推送由用户手动管理）。
 
 **工作区不绑定厂商**：现有两个文档集恰好属于同一厂商，但这不是前提。根层（本文、根
@@ -107,12 +109,17 @@ document/
    `VPNavBarSearch.vue` 换成 VitePress 自带本地搜索。**别名丢了搜索框整个不渲染**（已踩过）。
 3. **补齐 `--vp-*` 设计变量**：`@vue/theme` 只定义 `--vt-c-*`，而 VitePress 自带组件引用
    `--vp-c-*` / `--vp-local-search-*`。不补会让搜索弹窗全透明无边框（像「打不开」）。
-4. **`@vueuse` 依赖处理**：`@vue/theme` 依赖 `@vueuse/core` v10、VitePress 1.6 依赖 v12，
-   npm 只能提升一份，须在 `vite.ssr.noExternal` 显式声明（含 `@vueuse/shared`）。
+4. **`@vueuse` 依赖处理**：`@vue/theme` 依赖 `@vueuse/core` v10，VitePress 2 依赖 v14，
+   两份并存，须在 `vite.ssr.noExternal` 显式声明（含 baseConfig 漏掉的 `@vueuse/shared`）。
+   不声明会在渲染阶段报 `@vueuse/shared does not provide an export named 'createRef'`。
 
 同时必须保留：`markdown.theme: 'github-dark'`、`lineNumbers: false`、`headers.level: [2, 4]`、
-**不启用 `cleanUrls`**、`theme-color` meta、本地搜索中文 `translations` 与 i18n 文案、
-`navbar-title` 插槽替换主题内置 Vue logo。
+`theme-color` meta、本地搜索中文 `translations` 与 i18n 文案、`navbar-title` 插槽替换主题
+内置 Vue logo。
+
+**不设 `cleanUrls`**：VitePress 2 起即使该值为 false，页面内生成的链接也是无扩展名形式
+（`/ifind/guide/token`），客户端路由自行解析到磁盘上的 `.html` 文件——这是 V2 的行为变化，
+与 V1（链接带 `.html`）不同。不要因为看到「链接没有 .html」就去开 `cleanUrls`。
 
 **`markdown.math` 必须为 `true`**：SuperMind 正文含 LaTeX，关闭后公式里的 `{{ }}` 会被 Vue
 当成插值表达式导致构建失败。iFinD 正文不含 `$`，开启对它是无害的空操作。

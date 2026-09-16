@@ -7,10 +7,11 @@
 
 /* ---- VitePress 组件的设计变量补齐 ----
  * 本地搜索框用的是 VitePress 自带组件，它们引用 --vp-c-* / --vp-local-search-*
- * 这套变量；而 @vue/theme 只定义 --vt-c-*（实测这些 --vp-* 全为 undefined，
- * 会导致搜索弹窗背景透明、无边框、无高亮，看起来「打不开」）。
- * 这里把用到的变量映射到主题自己的 --vt-c-*，颜色即可自动跟随明暗模式。
- * 注：@vue/theme 自身对 --vp-* 零引用（已核对），故不影响主题样式。 */
+ * 这套变量；而 @vue/theme 只提供 --vt-c-* 配色（它自带 variables.css 只定义
+ * --vp-sidebar-width-* / --vp-z-index-* 这类结构变量，没有颜色）。
+ * 实测：不补这些颜色变量，搜索弹窗会完全透明（shell 背景 rgba(0,0,0,0)）、
+ * 背景遮罩也透明，看起来像「打不开」——VitePress 2 下同样如此。
+ * 这里把用到的变量映射到主题自己的 --vt-c-*，颜色即可自动跟随明暗模式。 */
 :root {
   --vp-c-bg: var(--vt-c-bg);
   --vp-c-bg-alt: var(--vt-c-bg-soft);

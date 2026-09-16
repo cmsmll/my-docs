@@ -71,11 +71,11 @@ document/
 1. **关闭 `markdown-it-attrs`**：手册中的 `{周期1}`、`{周期2}` 会被该插件当成 HTML 属性，导致内容静默丢失甚至构建失败。
 2. **替换搜索框**：`@vue/theme` 的搜索只支持 Algolia（需凭证）。用 Vite alias 把 `VPNavBarSearch.vue` 换成 VitePress 自带本地搜索。**别名丢了会导致搜索框整个不渲染。**
 3. **补齐 `--vp-*` 设计变量**：`@vue/theme` 只定义 `--vt-c-*`，VitePress 自带组件引用 `--vp-c-*` / `--vp-local-search-*`。不补会让搜索弹窗完全透明、无边框（看起来像「打不开」）。
-4. **`@vueuse` 依赖处理**：`@vue/theme` 依赖 `@vueuse/core` v10，VitePress 1.6 依赖 v12，npm 只能提升一份，须在 `vite.ssr.noExternal` 显式声明（含 `@vueuse/shared`）。
+4. **`@vueuse` 依赖处理**：`@vue/theme` 依赖 `@vueuse/core` v10，VitePress 2 依赖 v14，两份并存，须在 `vite.ssr.noExternal` 显式声明（含 baseConfig 漏掉的 `@vueuse/shared`）。不声明会在渲染阶段报 `createRef` 导出缺失。
 
 ### 另有两处约定
 
-- **不启用 `cleanUrls`**：`@vue/theme` 生成的链接带 `.html`（与 cn.vuejs.org 一致），开启会冲突。
+- **不设 `cleanUrls`**：VitePress 2 起生成的链接已是无扩展名形式（`/ifind/guide/token`），客户端路由解析到磁盘的 `.html` 文件；产物布局仍是 `<page>.html`。
 - **代码块用深色单主题**（`markdown.theme: 'github-dark'`）：与 cn.vuejs.org 相同，浅色页面下代码块也是深底。
 
 ### 主题能力边界

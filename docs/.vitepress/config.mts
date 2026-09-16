@@ -3,7 +3,7 @@ import { createRequire } from 'node:module'
 import { defineConfigWithTheme } from 'vitepress'
 import baseConfig from '@vue/theme/config'
 import type { Config as ThemeConfig } from '@vue/theme'
-import { collections, siteTitle } from './docs-registry'
+import { collections, siteTitle } from './docs-registry.ts'
 import sidebarSupermind from './sidebar-supermind.json' with { type: 'json' }
 
 /**
@@ -19,6 +19,12 @@ import sidebarSupermind from './sidebar-supermind.json' with { type: 'json' }
  *
  * 注意：本站正文含 LaTeX 公式（SuperMind 部分），故开启 `math`；否则公式里的 `{{ }}` 会被
  * Vue 当成插值表达式导致构建失败。iFinD 部分正文不含 `$`，开启对它是无害的空操作。
+ *
+ * 本站跑在 VitePress 2（当前为 alpha）上，与 Vue 官方文档站同款组合
+ * （`@vue/theme@2.4.0` + `vitepress@^2.0.0-alpha`）——官方 `@vue/theme` 的
+ * peerDependencies 仍写着 `^1.2.2`，装的时候会有 peer 警告，属已知情况。
+ * V2 使用 Vite 8（rolldown），config 由原生 loader 加载：**相对导入必须带扩展名**
+ * （见下面的 `./docs-registry.ts`），否则构建会告警。
  */
 
 const require = createRequire(import.meta.url)
@@ -129,8 +135,9 @@ export default defineConfigWithTheme<ThemeConfig>({
   // baseConfig 预置的 /logo.svg 本站没有对应资源，换成主题色声明
   head: [['meta', { name: 'theme-color', content: '#42b883' }]],
 
-  // 不设 cleanUrls：@vue/theme 生成的链接带 .html（与 cn.vuejs.org 一致），
-  // 开启后配置与主题的链接约定不一致。
+  // 不设 cleanUrls。VitePress 2 起、即使 cleanUrls 为 false，页面内生成的链接也已是
+  // 无扩展名的形式（`/ifind/guide/token`），客户端路由会自行解析到对应的 .html 文件；
+  // 磁盘产物仍是 `<page>.html`。这是 V2 的行为变化，与 V1（链接带 .html）不同。
 
   markdown: {
     ...baseConfig.markdown,
@@ -150,9 +157,10 @@ export default defineConfigWithTheme<ThemeConfig>({
     ...baseConfig.vite,
     ssr: {
       ...baseConfig.vite?.ssr,
-      // @vue/theme 仍依赖 @vueuse/core v10，而 VitePress 1.6 依赖 v12。
-      // npm 只能提升一份，把 v10 误留给 v12 使用会报 pxValue 缺失；
-      // 这里显式声明不外部化（baseConfig 漏了 @vueuse/shared）。
+      // @vue/theme 依赖 @vueuse/core v10，而 VitePress 2 依赖 v14；两份并存时
+      // 不显式声明 noExternal，SSR 阶段会报
+      // `@vueuse/shared does not provide an export named 'createRef'`
+      //（VitePress 1.6 下的同源报错是 pxValue 缺失）。baseConfig 漏了 @vueuse/shared。
       noExternal: ['@vue/theme', '@vueuse/core', '@vueuse/shared', '@vueuse/metadata'],
     },
     optimizeDeps: {
