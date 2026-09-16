@@ -23,10 +23,9 @@
   （与 Vue 官方文档站同款组合；`@vue/theme` 的 peer 仍写 `^1.2.2`，装依赖会有 peer 警告，属已知）。
   V2 用 Vite 8（rolldown），config 走原生 loader：**相对 import 必须带扩展名**。
 - **远程与分支**：远程 `origin`（`cmsmll/my-docs`）有 `main` 与 `dev` 两个分支，两者由用户
-  手动同步——**未获明确指示绝不 push**。`main` 是发布线，日常改动提交到 `dev`
-  （工作分支，与 `main` 一起长期保留，不要删除）。本地已无 `master`：早期它是本机
-  `git init` 的默认名（系统级 `init.defaultBranch=master`），与远程 `main` 名字不一致，
-  已重命名为 `main` 并快进合入。
+  手动同步——**未获明确指示绝不 push**。`main` 是发布线，`dev` 是工作分支（两者各自独立成线、
+  长期保留，见 §5.1）。本地已无 `master`：早期它是本机 `git init` 的默认名
+  （系统级 `init.defaultBranch=master`），与远程 `main` 名字不一致，已重命名为 `main`。
 
 **工作区不绑定厂商**：现有两个文档集恰好属于同一厂商，但这不是前提。根层（本文、根
 `README.md`、`package.json`）的描述保持中性，只讲「文档集 / 文档中心」；产品信息与所属厂商
@@ -307,7 +306,11 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 - **工作分支是 `dev`**（本地与远程同名，均有跟踪）。日常改动的提交都落在 `dev`，
   **不要**直接提交到 `main`，也不要删除或改写已推送的分支（远程 `dev` 是长期分支，
   必须保留其记录——合并后**不要**删它）。把 `dev` 合并到 `main`、以及推送到远程，
-  都要用户明确授权；合并方式沿用**快进**（`--ff-only`）以保持线性历史。
+  都要用户明确授权。
+- **`main` 与 `dev` 各自独立成线，合并用 `--no-ff`（不用快进）**。两条分支都有对方没有的
+  提交，因此合并会产生一个双亲的合并提交，图上能看到分叉。**不要**用 `--ff-only` 把 `dev`
+  快进到 `main`：那会让 `main` 永远停在 `dev` 的直线上，失去分叉，且之后想分开只能改写
+  历史（force push）。`main` 上可留一个标记基线用的空提交（`--allow-empty`）作为分叉点。
 - **提交信息格式：Conventional Commits + 中文说明**。类型用 `feat` / `fix` / `refactor` /
   `docs` / `chore` / `test` / `style` / `perf` / `build` / `ci`，说明用中文：
   - `feat: 新增文档列表页与二级路由`

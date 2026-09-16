@@ -31,8 +31,9 @@ npm run docs:preview # 预览构建产物
 ```
 
 分支：远程 `origin`（`cmsmll/my-docs`）有 `main` 与 `dev` 两个分支，`dev` 长期保留。
-日常改动提交到 `dev`；把 `dev` 合并到 `main` 时用快进（`git merge --ff-only dev`）保持
-线性历史。推送由仓库维护者手动执行。
+日常改动提交到 `dev`；`main` 与 `dev` 各自成线，把 `dev` 合并到 `main` 时用
+`git merge --no-ff dev` 生成合并提交（**不要**用 `--ff-only` 快进，否则两者会变成一条直线、
+失去分叉）。推送由仓库维护者手动执行。
 
 ## 目录结构
 
