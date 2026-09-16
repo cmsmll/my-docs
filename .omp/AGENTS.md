@@ -1,4 +1,4 @@
-# AGENTS.md —— 同花顺文档工作区（thsi-docs）
+# AGENTS.md —— 文档开发工作区（document）
 
 面向在本仓库工作的 AI 助手 / 开发者的项目指南。**先读本文，再动手改代码。**
 
@@ -9,8 +9,8 @@
 
 ## 一、项目概览
 
-**同花顺文档工作区**：用 VitePress + `@vue/theme`（cn.vuejs.org 本体主题）发布同花顺两个产品的
-官方文档站点，两站共用同一套主题与构建配置。
+**文档开发工作区**：用 VitePress + `@vue/theme`（cn.vuejs.org 本体主题）发布多个产品文档
+站点，各站共用同一套主题与构建配置。
 
 | 站点 | 目录 | 包名 | 内容来源 |
 | --- | --- | --- | --- |
@@ -19,7 +19,12 @@
 
 - 形态：npm workspaces 单仓多包，**非** git 远程托管项目（无 origin，推送由用户手动管理）。
 - 运行时：Node `v24.11.0` / npm `11.6.1`；`vitepress@1.6.4` + `@vue/theme@2.4.0`。
-- 产出：两个静态站点，各自 `docs/.vitepress/dist`，可独立部署。
+- 产出：每个站点各自 `docs/.vitepress/dist`，可独立部署。
+
+**工作区不绑定厂商**：上述两个站点恰好属于同一厂商，但这不是前提。工作区层（本文、根
+`README.md`、`package.json`、共享层）的描述保持中性，只讲「文档站点」；产品信息与所属
+厂商由**站点自身**声明（站点 `README.md`、`config.mts` 的 `title`/`description`/`footer`、
+`docs/index.md` 的文案）。新增站点时不要往工作区层写厂商名。
 
 **当前规模**（改动后若数字变化，顺手更新本表）：
 
@@ -189,6 +194,12 @@ python sites/supermind/source/verify_supermind.py sites/supermind/docs/.vitepres
   路径解析、分页规则这类反直觉的地方，必须留下原因。
 - 共享层是 TypeScript（`config.ts` / `index.ts`）+ Vue SFC；本站配置用 `.mts`。
 - 不引入未使用的抽象，不为一次性需求加配置项。新增能力前先确认共享层是否已有。
+- **厂商与产品信息分层写**：
+  - 工作区层（根 `README.md`、`package.json`、`packages/theme` 的 `description`、本文）只写
+    「文档站点 / 工作区」，**不写厂商名**——本工作区不限定只放某一家的产品文档。
+  - 厂商标识只在**站点内**出现：站点 `README.md`、`config.mts` 的 `title`/`description`/
+    `footer`、`docs/index.md` 文案。归属要写就写真实厂商，不要含糊。
+  - 例外：站点正文里出现的厂商名属于**原文内容**（如官方文档原文），照抄不改。
 
 ---
 

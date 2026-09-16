@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "同花顺文档站点共享层：@vue/theme 主题入口、站点配置工厂、补丁样式与首页组件",
+  "description": "文档站点共享层：@vue/theme 主题入口、站点配置工厂、补丁样式与首页组件",
   "exports": {
     ".": "./index.ts",
     "./config": "./config.ts",

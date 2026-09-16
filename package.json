@@ -1,9 +1,9 @@
 {
-  "name": "thsi-docs",
+  "name": "document",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "同花顺文档工作区：iFinD HTTP API 用户手册与 SuperMind 帮助文档，共用同一套 @vue/theme 主题与构建配置",
+  "description": "文档开发工作区：多个产品文档站点共用同一套 @vue/theme 主题与构建配置",
   "workspaces": [
     "packages/*",
     "sites/*"

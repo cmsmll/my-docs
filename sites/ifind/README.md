@@ -3,7 +3,7 @@
 同花顺 iFinD HTTP API 官方手册（v2.1）的网页版。使用 VitePress + **`@vue/theme`**
 （[cn.vuejs.org](https://cn.vuejs.org/guide/introduction.html) 本体所用的 Vue 官方文档主题）构建。
 
-本仓库是同花顺文档工作区（workspace）的一个站点。**主题、补丁样式、首页组件与站点配置
+本仓库是文档开发工作区（workspace）的一个站点。**主题、补丁样式、首页组件与站点配置
 工厂都在共享层 `packages/theme`**，本站只声明自己的身份数据（标题、导航、侧边栏、页脚、
 首页文案）。共享层的 4 处必要适配与改动禁忌见仓库根 `README.md`。
 

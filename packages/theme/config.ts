@@ -6,9 +6,8 @@ import baseConfig from '@vue/theme/config'
 import type { Config as ThemeConfig } from '@vue/theme'
 
 /**
- * 站点共享配置工厂。两个文档站点（iFinD、SuperMind）的差异只有「站点身份数据」
- * （标题、描述、导航、侧边栏、页脚），其余全部由此处产出，避免同一套适配逻辑
- * 在多处复制后漂移。
+ * 站点共享配置工厂。各文档站点的差异只有「站点身份数据」（标题、描述、导航、侧边栏、
+ * 页脚），其余全部由此处产出，避免同一套适配逻辑在多处复制后漂移。
  */
 
 const require = createRequire(import.meta.url)
@@ -84,10 +83,10 @@ export function createSiteConfig(site: SiteData) {
       // 正文里 `{周期1}` 这类花括号是数据，不是 markdown-it-attrs 的 HTML 属性语法；
       // 不关闭会被静默吞掉，导致内容丢失甚至构建失败。
       attrs: { disable: true },
-      // 手册层级较深（正文含 h4），比 Vue 文档多保留一层目录
+      // 文档正文层级较深（含 h4），比 Vue 文档多保留一层目录
       headers: { level: [2, 4] },
-      // 正文含 LaTeX 的站点（SuperMind）开启数学渲染；否则公式里的 {{ }} 会被
-      // Vue 当成插值表达式。
+      // 正文含 LaTeX 的站点开启数学渲染（本站 config 传 math: true）；
+      // 否则公式里的 {{ }} 会被 Vue 当成插值表达式。
       ...(site.math ? { math: true } : {}),
     },
 
