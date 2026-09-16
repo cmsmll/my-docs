@@ -1,0 +1,19 @@
+{
+  "name": "thsi-docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "同花顺文档工作区：iFinD HTTP API 用户手册与 SuperMind 帮助文档，共用同一套 @vue/theme 主题与构建配置",
+  "workspaces": [
+    "packages/*",
+    "sites/*"
+  ],
+  "scripts": {
+    "docs:dev:ifind": "npm run docs:dev -w ifind-http-api-manual",
+    "docs:build:ifind": "npm run docs:build -w ifind-http-api-manual",
+    "docs:preview:ifind": "npm run docs:preview -w ifind-http-api-manual",
+    "docs:dev:supermind": "npm run docs:dev -w supermind-help",
+    "docs:build:supermind": "npm run docs:build -w supermind-help",
+    "docs:preview:supermind": "npm run docs:preview -w supermind-help"
+  }
+}

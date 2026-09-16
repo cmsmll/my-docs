@@ -1,0 +1,595 @@
+---
+title: "5.  Operands"
+---
+
+# 5.  Operands
+Operand 是表达式里可直接引用的数据字段。以下列表按数据类型分组整理。
+
+## 分析师一致预期
+
+- `$forecast_basic_eps_current_year`：预测每股收益（本年度）
+- `$forecast_basic_eps_next_year`：预测每股收益（次年）
+- `$forecast_net_profit_current_year`：预测净利润（本年度）
+- `$forecast_net_profit_next_year`：预测净利润（次年）
+- `$forecast_operating_revenue_current_year`：预测营业收入（本年度）
+- `$forecast_operating_revenue_next_year`：预测营业收入（次年）
+- `$forward_pe_ratio_current_year`：预测市盈率（本年度）
+- `$forward_pe_ratio_next_year`：预测市盈率（次年）
+- `$number_of_rating_agencies_6m`：六个月内评级机构家数
+- `$composite_rating_score_6m`：六个月内综合评级（数值）
+
+## 资产负债表
+
+- `$cash`：货币资金
+- `$trading_financial_assets`：交易性金融资产
+- `$notes_receivable`：应收票据
+- `$accounts_receivable`：应收账款
+- `$advance_payments`：预付款项
+- `$interest_receivable`：应收利息
+- `$dividends_receivable`：应收股利
+- `$other_receivables`：其他应收款
+- `$inventory`：存货
+- `$non_current_assets_due_within_one_year`：一年内到期的非流动资产
+- `$other_current_assets`：其他流动资产
+- `$special_item_current_assets`：流动资产特殊科目
+- `$balancing_item_current_assets`：流动资产平衡科目
+- `$total_current_assets`：流动资产合计
+- `$funds_lent`：拆出资金
+- `$insurance_premiums_receivable`：应收保费
+- `$reinsurance_premiums_receivable`：应收分保账款
+- `$reinsurance_reserves_receivable`：应收分保合同准备金
+- `$available_for_sale_financial_assets`：可供出售金融资产
+- `$held_to_maturity_investments`：持有至到期投资
+- `$long_term_receivables`：长期应收款
+- `$long_term_equity_investments`：长期股权投资
+- `$investment_property`：投资性房地产
+- `$fixed_assets`：固定资产
+- `$construction_in_progress`：在建工程
+- `$engineering_materials`：工程物资
+- `$disposal_of_fixed_assets`：固定资产清理
+- `$productive_biological_assets`：生产性生物资产
+- `$oil_and_gas_assets`：油气资产
+- `$intangible_assets`：无形资产
+- `$development_expenditure`：开发支出
+- `$goodwill`：商誉
+- `$long_term_prepaid_expenses`：长期待摊费用
+- `$deferred_tax_assets`：递延所得税资产
+- `$other_non_current_assets`：其他非流动资产
+- `$special_item_non_current_assets`：非流动资产特殊科目
+- `$balancing_item_non_current_assets`：非流动资产平衡科目
+- `$total_non_current_assets`：非流动资产合计
+- `$loans_and_advances`：发放贷款和垫款
+- `$cash_and_deposits_at_central_bank`：现金及存放中央银行款项
+- `$interbank_deposits`：存放同业款项
+- `$precious_metals`：贵金属
+- `$derivative_financial_assets`：衍生金融资产
+- `$buy_resale_financial_assets`：买入返售金融资产
+- `$other_assets`：其他资产
+- `$subrogation_receivables`：应收代位追偿款
+- `$reinsurance_unearned_premium_reserve`：应收分保未到期责任准备金
+- `$reinsurance_outstanding_claims_reserve`：应收分保未决赔款准备金
+- `$reinsurance_life_reserve`：应收分保寿险责任准备金
+- `$reinsurance_long_term_health_reserve`：应收分保长期健康险责任准备金
+- `$policyholder_pledge_loans`：保户质押贷款
+- `$time_deposits`：定期存款
+- `$refundable_capital_deposits`：存出资本保证金
+- `$independent_account_assets`：独立账户资产
+- `$customer_provisions`：客户备付金
+- `$margin_deposits_paid`：存出保证金
+- `$trading_seat_fees`：交易席位费
+- `$securities_lending_funds`：融出资金
+- `$other_receivables_securities`：应收款项
+- `$asset_special_account`：资产特殊科目
+- `$asset_balancing_account`：资产平衡科目
+- `$total_assets`：资产总计
+- `$short_term_borrowings`：短期借款
+- `$trading_financial_liabilities`：交易性金融负债
+- `$notes_payable`：应付票据
+- `$accounts_payable`：应付账款
+- `$advances_from_customers`：预收账款
+- `$employee_benefits_payable`：应付职工薪酬
+- `$taxes_payable`：应交税费
+- `$interest_payable`：应付利息
+- `$dividends_payable`：应付股利
+- `$other_payables`：其他应付款
+- `$non_current_liabilities_due_within_one_year`：一年内到期的非流动负债
+- `$other_current_liabilities`：其他流动负债
+- `$special_item_current_liabilities`：流动负债特殊科目
+- `$balancing_item_current_liabilities`：流动负债平衡科目
+- `$total_current_liabilities`：流动负债合计
+- `$borrowings_from_central_bank`：向中央银行借款
+- `$interbank_borrowings`：拆入资金
+- `$sale_and_repurchase_agreements`：卖出回购金融资产款
+- `$customer_securities_deposits`：代理买卖证券款
+- `$underwriting_proceeds_payable`：代理承销证券款
+- `$deposits_and_interbank_placements`：吸收存款及同业存放
+- `$insurance_contract_reserves`：保险合同准备金
+- `$deferred_income_current`：流动负债递延收益
+- `$short_term_bonds_payable`：应付短期债券
+- `$long_term_borrowings`：长期借款
+- `$bonds_payable`：应付债券
+- `$long_term_payables`：长期应付款
+- `$special_payables`：专项应付款
+- `$provisions`：预计负债
+- `$deferred_tax_liabilities`：递延所得税负债
+- `$other_non_current_liabilities`：其他非流动负债
+- `$special_item_non_current_liabilities`：非流动负债特殊科目
+- `$balancing_item_non_current_liabilities`：非流动负债平衡科目
+- `$total_non_current_liabilities`：非流动负债合计
+- `$deferred_income_non_current`：非流动负债递延收益
+- `$long_term_employee_benefits`：长期应付职工薪酬
+- `$deposits_from_interbank`：同业及其他金融机构存放款项
+- `$derivative_financial_liabilities`：衍生金融负债
+- `$accepted_deposits`：吸收存款
+- `$other_liabilities`：其他负债
+- `$advance_premiums`：预收保费
+- `$fees_and_commissions_payable`：应付手续费及佣金
+- `$reinsurance_payables`：应付分保账款
+- `$claims_payable`：应付赔付款
+- `$policyholder_dividends_payable`：应付保单红利
+- `$policyholder_deposits_and_investments`：保户储金及投资款
+- `$unearned_premium_reserve`：未到期责任准备金
+- `$outstanding_claims_reserve`：未决赔款准备金
+- `$life_insurance_reserve`：寿险责任准备金
+- `$long_term_health_insurance_reserve`：长期健康险责任准备金
+- `$independent_account_liabilities`：独立账户负债
+- `$pledged_borrowings`：其中：质押借款
+- `$margin_deposits_received`：存入保证金
+- `$short_term_financing_payable`：应付短期融资款
+- `$other_payables_securities`：应付款项
+- `$liability_special_account`：负债特殊科目
+- `$liability_balancing_account`：负债平衡科目
+- `$total_liabilities`：负债合计
+- `$paid_in_capital_or_share_capital`：实收资本（或股本）
+- `$capital_reserve`：资本公积金
+- `$treasury_stock`：库存股
+- `$special_reserves`：专项储备
+- `$surplus_reserve`：盈余公积
+- `$general_risk_reserve`：一般风险准备
+- `$retained_earnings`：未分配利润
+- `$foreign_currency_translation_differences`：外币报表折算差额
+- `$special_item_equity`：股东权益特殊科目
+- `$balancing_item_equity`：股东权益平衡科目
+- `$equity_attributable_to_parent`：归属于母公司股东权益合计
+- `$minority_interest`：少数股东权益
+- `$total_equity`：股东权益合计
+- `$total_share_capital`：股本总数
+- `$other_consolidated_income`：其他综合收益
+- `$other_equity_instruments`：其他权益工具
+- `$preferred_shares`：其他权益工具：优先股
+- `$perpetual_bonds`：其他权益工具：永续债
+- `$trading_risk_reserve`：交易风险准备
+- `$total_liabilities_and_equity`：负债和股东权益总计
+
+## 现金流量表
+
+- `$cash_received_from_sales_of_goods_and_services`：销售商品、提供劳务收到的现金
+- `$tax_refund_receipts`：收到的税费返还
+- `$other_cash_received_from_operating_activities`：收到其他与经营活动有关的现金
+- `$net_increase_in_customer_and_interbank_deposits`：客户存款和同业存放款项净增加额
+- `$net_increase_in_borrowings_from_central_bank`：向中央银行借款净增加额
+- `$net_increase_in_interbank_lending`：向其他金融机构拆入资金净增加额
+- `$cash_received_for_interest_commissions_and_fees`：收取利息、手续费及佣金的现金
+- `$cash_received_from_original_insurance_premiums`：收到原保险合同保费取得的现金
+- `$net_cash_received_from_reinsurance`：收到再保业务现金净额
+- `$net_increase_in_policyholder_deposits_and_investments`：保户储金及投资款净增加额
+- `$net_increase_from_disposal_of_trading_financial_assets`：处置交易性金融资产净增加额
+- `$net_increase_in_interbank_borrowings`：拆入资金净增加额
+- `$net_increase_in_repurchase_agreements`：回购业务资金净增加额
+- `$special_item_operating_cash_inflows`：经营活动现金流入差额（特殊科目）
+- `$subtotal_of_cash_inflows_from_operating_activities`：经营活动现金流入小计
+- `$cash_paid_for_goods_and_services`：购买商品、接受劳务支付的现金
+- `$cash_paid_to_employees`：支付给职工以及为职工支付的现金
+- `$tax_payments`：支付的各项税费
+- `$other_cash_paid_for_operating_activities`：支付其他与经营活动有关的现金
+- `$net_increase_in_loans_and_advances`：客户贷款及垫款净增加额
+- `$net_increase_in_deposits_at_central_bank_and_interbank`：存放中央银行和同业款项净增加额
+- `$cash_paid_for_interest_commissions_and_fees`：支付利息、手续费及佣金的现金
+- `$cash_paid_for_original_insurance_claims`：支付原保险合同赔付款项的现金
+- `$cash_paid_for_policyholder_dividends`：支付保单红利的现金
+- `$special_item_operating_cash_outflows`：经营活动现金流出差额（特殊科目）
+- `$subtotal_of_cash_outflows_from_operating_activities`：经营活动现金流出小计
+- `$net_cash_flows_from_operating_activities`：经营活动产生的现金流量净额
+- `$balancing_item_operating_cash_inflows`：经营活动现金流入差额（平衡科目）
+- `$balancing_item_operating_cash_outflows`：经营活动现金流出差额（平衡科目）
+- `$special_balancing_item_net_cash_flows_operating`：经营活动产生的现金流量净额特殊科目
+- `$net_decrease_in_securities_lending`：融出资金净减少额
+- `$net_cash_received_from_agent_securities_trading`：代理买卖证券收到的现金净额
+- `$net_increase_in_securities_lending`：融出资金净增加额
+- `$net_cash_paid_for_agent_securities_trading`：代理买卖证券支付的现金净额
+- `$cash_received_from_disposal_of_investments`：收回投资收到的现金
+- `$cash_received_from_investment_income`：取得投资收益收到的现金
+- `$net_cash_received_from_disposal_of_fixed_assets`：处置固定资产、无形资产和其他长期资产收回的现金净额
+- `$net_cash_received_from_disposal_of_subsidiaries`：处置子公司及其他营业单位收到的现金净额
+- `$other_cash_received_from_investing_activities`：收到其他与投资活动有关的现金
+- `$special_item_investing_cash_inflows`：投资活动现金流入特殊科目
+- `$subtotal_of_cash_inflows_from_investing_activities`：投资活动现金流入小计
+- `$cash_paid_for_acquisition_of_fixed_assets`：购建固定资产、无形资产和其他长期资产支付的现金
+- `$cash_paid_for_investments`：投资支付的现金
+- `$net_cash_paid_for_acquisition_of_subsidiaries`：取得子公司及其他营业单位支付的现金净额
+- `$other_cash_paid_for_investing_activities`：支付其他与投资活动有关的现金
+- `$net_increase_in_pledged_loans`：质押贷款净增加额
+- `$special_item_investing_cash_outflows`：投资活动现金流出差额（特殊项目）
+- `$subtotal_of_cash_outflows_from_investing_activities`：投资活动现金流出小计
+- `$net_cash_flows_from_investing_activities`：投资活动产生的现金流量净额
+- `$balancing_item_investing_cash_inflows`：投资活动现金流入差额（平衡科目）
+- `$balancing_item_investing_cash_outflows`：投资活动现金流出差额（平衡科目）
+- `$special_item_net_cash_flows_investing`：投资活动产生的现金流量净额特殊科目
+- `$cash_received_from_issuance_of_equity`：吸收投资收到的现金
+- `$cash_received_from_minority_shareholders`：子公司吸收少数股东投资收到的现金
+- `$cash_received_from_borrowings`：取得借款收到的现金
+- `$other_cash_received_from_financing_activities`：收到其他与筹资活动有关的现金
+- `$proceeds_from_issuance_of_bonds`：发行债券收到的现金
+- `$special_item_financing_cash_inflows`：筹资活动现金流入差额（特殊项目）
+- `$subtotal_of_cash_inflows_from_financing_activities`：筹资活动现金流入小计
+- `$cash_paid_for_repayment_of_debt`：偿还债务支付的现金
+- `$cash_paid_for_dividends_and_interest`：分配股利、利润或偿付利息支付的现金
+- `$dividends_paid_to_minority_shareholders`：子公司支付给少数股东的股利
+- `$other_cash_paid_for_financing_activities`：支付其他与筹资活动有关的现金
+- `$special_item_financing_cash_outflows`：筹资活动现金流出差额（特殊项目）
+- `$subtotal_of_cash_outflows_from_financing_activities`：筹资活动现金流出小计
+- `$net_cash_flows_from_financing_activities`：筹资活动产生的现金流量净额
+- `$balancing_item_financing_cash_inflows`：筹资活动现金流入差额（平衡科目）
+- `$balancing_item_financing_cash_outflows`：筹资活动现金流出差额（平衡科目）
+- `$special_item_net_cash_flows_financing`：筹资活动产生的现金流量净额特殊科目
+- `$effect_of_exchange_rate_changes_on_cce`：汇率变动对现金及现金等价物的影响
+- `$net_increase_in_cash_and_cash_equivalents`：现金及现金等价物净增加额
+- `$opening_balance_of_cash_and_cash_equivalents`：期初现金及现金等价物余额
+- `$closing_balance_of_cash_and_cash_equivalents`：期末现金及现金等价物余额
+- `$net_profit`：净利润
+- `$asset_impairment_provision`：资产减值准备
+- `$depreciation_and_amortization`：固定资产折旧、油气资产折耗、生产性生物资产折旧
+- `$amortization_of_intangible_assets`：无形资产摊销
+- `$amortization_of_long_term_prepaid_expenses`：长期待摊费用摊销
+- `$loss_on_disposal_of_fixed_assets`：处置固定资产、无形资产和其他长期资产的损失
+- `$loss_on_retirement_of_fixed_assets`：固定资产报废损失
+- `$fair_value_change_losses`：公允价值变动损失
+- `$financial_expenses`：财务费用
+- `$investment_losses`：投资损失
+- `$decrease_in_deferred_tax_assets`：递延所得税资产减少
+- `$increase_in_deferred_tax_liabilities`：递延所得税负债增加
+- `$decrease_in_inventory`：存货的减少
+- `$decrease_in_operating_receivables`：经营性应收项目的减少
+- `$increase_in_operating_payables`：经营性应付项目的增加
+- `$other_adjustments`：其他
+- `$special_item_indirect_operating_cash_flows`：间接法-经营活动现金流量净额差额（特殊科目）
+- `$net_cash_flows_from_operating_activities_indirect`：间接法-经营活动产生的现金流量净额
+- `$conversion_of_debt_to_equity`：债务转为资本
+- `$convertible_bonds_due_within_one_year`：一年内到期的可转换公司债券
+- `$acquisition_of_fixed_assets_via_finance_lease`：融资租入固定资产
+- `$cash_balance_at_end`：现金的期末余额
+- `$cash_balance_at_beginning`：现金的期初余额
+- `$cash_equivalents_balance_at_end`：现金等价物的期末余额
+- `$cash_equivalents_balance_at_beginning`：现金等价物的期初余额
+- `$net_increase_in_cce_indirect_method`：间接法 - 现金及现金等价物净增加额
+- `$special_item_cce_net_increase_direct_method`：直接法 - 现金及现金等价物净增加额差额（特殊科目）
+- `$balancing_item_cce_net_increase_direct_method`：直接法 - 现金及现金等价物净增加额差额（平衡科目）
+- `$balancing_item_indirect_operating_cash_flows`：间接法 - 经营活动现金流量净额平衡科目
+- `$decrease_in_prepaid_expenses`：待摊费用减少
+- `$increase_in_accrued_expenses`：预提费用增加
+- `$special_balancing_item_cce_net_increase_indirect`：间接法-现金及现金等价物净增加额特殊科目
+- `$balancing_item_cce_net_increase_indirect`：间接法-现金及现金等价物净增加额平衡科目
+- `$special_item_closing_cce_balance`：期末现金及现金等价物余额特殊科目
+- `$balancing_item_closing_cce_balance`：期末现金及现金等价物余额平衡科目
+- `$foreign_exchange_losses`：汇兑损失
+
+## 偿债能力指标
+
+- `$current_ratio_mrq`：流动比率MRQ
+- `$quick_ratio_mrq`：速动比率MRQ
+- `$conservative_quick_ratio_mrq`：保守速动比率MRQ
+- `$cash_ratio_mrq`：现金比率MRQ
+- `$equity_ratio_mrq`：产权比率MRQ
+- `$equity_attributable_to_parent_to_total_liabilities_mrq`：归属母公司股东的权益／负债合计MRQ
+- `$equity_attributable_to_parent_to_interest_bearing_debt_mrq`：归属母公司股东的权益／带息债务MRQ
+- `$tangible_assets_to_total_liabilities_mrq`：有形资产／负债合计MRQ
+- `$tangible_assets_to_interest_bearing_debt_mrq`：有形资产／带息债务MRQ
+- `$tangible_assets_to_net_debt_mrq`：有形资产／净债务MRQ
+- `$ebitda_to_total_liabilities_mrq`：息税折旧摊销前利润／负债合计MRQ
+- `$net_cash_flows_from_operating_activities_to_interest_bearing_debt_mrq`：经营活动产生的现金流量净额／带息债务MRQ
+- `$net_cash_flows_from_operating_activities_to_net_debt_mrq`：经营活动产生的现金流量净额／净债务MRQ
+- `$long_term_debt_to_working_capital_ratio_mrq`：长期债务与营运资金比率MRQ
+- `$net_debt_to_market_value_mrq`：净债务／总市值MRQ
+- `$interest_bearing_debt_to_market_value_mrq`：带息债务／总市值MRQ
+
+## 资金流向数据
+
+- `$act_buy_xl`：主动买入特大单金额（单位：元）
+- `$pas_buy_xl`：被动买入特大单金额（单位：元）
+- `$act_buy_l`：主动买入大单金额（单位：元）
+- `$pas_buy_l`：被动买入大单金额（单位：元）
+- `$act_buy_m`：主动买入中单金额（单位：元）
+- `$pas_buy_m`：被动买入中单金额（单位：元）
+- `$act_sell_xl`：主动卖出特大单金额（单位：元）
+- `$pas_sell_xl`：被动卖出特大单金额（单位：元）
+- `$act_sell_l`：主动卖出大单金额（单位：元）
+- `$pas_sell_l`：被动卖出大单金额（单位：元）
+- `$act_sell_m`：主动卖出中单金额（单位：元）
+- `$pas_sell_m`：被动卖出中单金额（单位：元）
+- `$buy_s`：小单买入金额（单位：元）
+- `$sell_s`：小单卖出金额（单位：元）
+- `$dde_l`：DDE 大单净额（单位：元），即大单主动买入与卖出的差额
+- `$net_flow_rate`：金额流入率（单位：%），反映资金净流入占成交总额的比例
+- `$l_net_value`：大单净量，通常指大单净买入量或净占比
+
+## 成长性指标
+
+- `$basic_eps_growth_ratio`：基本每股收益(同比增长率)
+- `$diluted_eps_growth_ratio`：稀释每股收益(同比增长率)
+- `$operating_cash_flow_per_share_growth_ratio`：每股经营活动产生的现金流量净额(同比增长率)
+- `$total_revenue_growth_ratio`：营业总收入(同比增长率)
+- `$operating_income_growth_ratio`：营业收入(同比增长率)
+- `$operating_profit_growth_ratio`：营业利润(同比增长率)
+- `$profit_before_tax_growth_ratio`：利润总额(同比增长率)
+- `$net_profit_growth_ratio`：净利润(同比增长率)
+- `$net_profit_attributable_to_parent_growth_ratio`：归属母公司股东的净利润(同比增长率)
+- `$net_profit_exclude_non_recurring_items_growth_ratio`：归属母公司股东的净利润-扣除非经常损益(同比增长率)
+- `$operating_cash_flow_growth_ratio`：经营活动产生的现金流量净额(同比增长率)
+- `$return_on_equity_diluted_growth_ratio`：净资产收益率(摊薄)(同比增长率)
+- `$net_assets_growth_ratio`：净资产(同比增长率)
+- `$total_liabilities_growth_ratio`：总负债(同比增长率)
+- `$total_assets_yoy_growth_ratio`：总资产(同比增长率)
+- `$net_cash_flow_growth_ratio`：现金净流量(同比增长率)
+- `$operating_income_compound_annual_growth_ratio`：营业总收入复合年增长率
+- `$net_profit_compound_annual_growth_ratio`：净利润复合增长率
+- `$net_profit_attributable_to_parent_compound_annual_growth_ratio`：归属母公司股东的净利润复合年增长率
+- `$book_value_per_share_growth_ratio`：每股净资产(相对年初增长率)
+- `$total_assets_growth_ratio_since_beginning_of_year`：资产总计(相对年初增长率)
+- `$equity_attributable_to_parent_growth_ratio_since_beginning_of_year`：归属母公司股东的权益(相对年初增长率)
+- `$total_revenue_growth_ratio_3_years`：营业总收入(3年, 增长率)
+- `$total_operating_costs_growth_ratio_3_years`：营业总成本(3年, 增长率)
+- `$operating_income_growth_ratio_3_years`：营业收入(3年, 增长率)
+- `$operating_profit_growth_ratio_3_years`：营业利润(3年, 增长率)
+- `$operating_net_income_growth_ratio_3_years`：经营活动净收益(3年, 增长率)
+- `$fair_value_changes_net_income_growth_ratio_3_years`：价值变动净收益(3年, 增长率)
+- `$profit_before_tax_growth_ratio_3_years`：利润总额(3年, 增长率)
+- `$net_profit_growth_ratio_3_years`：净利润(3年, 增长率)
+- `$net_profit_attributable_to_parent_growth_ratio_3_years`：归属母公司股东的净利润(3年, 增长率)
+- `$operating_cash_flow_growth_ratio_3_years`：经营活动产生的现金流量净额(3年, 增长率)
+- `$total_assets_growth_ratio_3_years`：资产总计(3年, 增长率)
+- `$shareholders_equity_growth_ratio_3_years`：股东权益(3年, 增长率)
+- `$equity_attributable_to_parent_growth_ratio_3_years`：归属母公司股东的权益(3年, 增长率)
+- `$return_on_equity_growth_ratio_3_years`：净资产收益率(3年, 增长率)
+
+## 利润表
+
+- `$total_operating_revenue`：营业总收入
+- `$operating_revenue`：营业收入
+- `$net_interest_income`：利息净收入
+- `$interest_income`：利息收入
+- `$interest_expenses`：利息支出
+- `$net_commission_and_fee_income`：手续费及佣金净收入
+- `$commission_and_fee_income`：手续费及佣金收入
+- `$commission_and_fee_expenses`：手续费及佣金支出
+- `$other_business_income`：其他业务收入
+- `$earned_premiums`：已赚保费
+- `$insurance_revenue`：保险业务收入
+- `$reinsurance_income`：分保费收入
+- `$ceded_premiums`：分出保费
+- `$change_in_unearned_premium_reserve`：提取未到期责任准备金
+- `$net_brokerage_income`：经纪业务手续费净收入
+- `$net_investment_banking_income`：投资银行业务手续费净收入
+- `$net_asset_management_income`：资产管理业务手续费净收入
+- `$special_item_total_revenue`：营业总收入差额（特殊科目）
+- `$balancing_item_total_revenue`：营业总收入差额（平衡科目）
+- `$total_operating_costs`：营业总成本
+- `$operating_cost`：营业成本
+- `$operating_taxes_and_surcharges`：营业税金及附加
+- `$selling_expenses`：销售费用
+- `$administrative_expenses`：管理费用
+- `$financial_expenses`：财务费用
+- `$asset_impairment_loss`：资产减值损失
+- `$operating_expenses`：营业支出
+- `$business_and_administrative_expenses`：业务及管理费
+- `$other_business_expenses`：其他业务成本
+- `$surrender_benefits`：退保金
+- `$claims_paid`：赔付支出
+- `$reinsurer_share_of_claims`：摊回赔付支出
+- `$provision_for_insurance_liabilities`：提取保险责任准备金
+- `$amortization_of_insurance_liabilities`：摊回保险责任准备金
+- `$policyholder_dividend_expenses`：保单红利支出
+- `$reinsurance_expenses`：分保费用
+- `$amortization_of_reinsurance_expenses`：摊回分保费用
+- `$special_item_total_cost`：营业总成本特殊科目
+- `$fair_value_change_gain`：公允价值变动收益
+- `$investment_income`：投资收益
+- `$investment_income_from_associates`：对联营企业和合营企业的投资收益
+- `$foreign_exchange_gain`：汇兑收益
+- `$balancing_item_total_cost`：营业总成本差额（平衡科目）
+- `$operating_profit`：营业利润
+- `$special_item_operating_profit`：营业利润差额（特殊科目）
+- `$balancing_item_operating_profit`：营业利润差额（平衡科目）
+- `$non_operating_income`：营业外收入
+- `$non_operating_expenses`：营业外支出
+- `$gain_on_disposal_of_non_current_assets`：非流动资产处置利得
+- `$loss_on_disposal_of_non_current_assets`：非流动资产处置损失
+- `$profit_before_tax`：利润总额
+- `$special_item_total_profit`：利润总额差额（特殊科目）
+- `$balancing_item_total_profit`：利润总额差额（平衡科目）
+- `$income_tax_expense`：所得税费用
+- `$net_profit`：净利润
+- `$special_item_net_profit`：净利润差额（特殊科目）
+- `$balancing_item_net_profit`：净利润差额（平衡科目）
+- `$net_profit_attributable_to_parent`：归属于母公司股东的净利润
+- `$minority_interest_income`：少数股东损益
+- `$other_comprehensive_income`：其他综合收益
+- `$oci_attributable_to_parent`：归属母公司所有者的其他综合收益
+- `$oci_attributable_to_minority`：归属于少数股东的其他综合收益
+- `$total_comprehensive_income`：综合收益总额
+- `$total_comprehensive_income_parent`：归属于母公司股东的综合收益总额
+- `$total_comprehensive_income_minority`：归属于少数股东的综合收益总额
+- `$basic_earnings_per_share`：基本每股收益
+- `$diluted_earnings_per_share`：稀释每股收益
+- `$non_recurring_gains_losses_parent`：归属于母公司的非经常性损益
+- `$main_business_revenue`：主营业务收入
+- `$main_business_cost`：主营业务成本
+- `$main_business_profit`：主营业务利润
+- `$oci_not_reclassifiable_to_pl`：以后不能重分类进损益的其他综合收益
+- `$remeasurement_of_defined_benefit_plans`：重新计量设定受益计划净负债或净资产的变动
+- `$share_of_unreclassifiable_oci_associates`：权益法下在被投资单位不能重分类进损益的其他综合收益中享有的份额
+- `$other_non_reclassifiable_oci`：不可重分类其他综合收益中的其他项
+- `$oci_reclassifiable_to_pl`：以后将重分类进损益的其他综合收益
+- `$share_of_reclassifiable_oci_associates`：权益法下在被投资单位以后将重分类进损益的其他综合收益中享有的份额
+- `$fv_changes_available_for_sale_assets`：可供出售金融资产公允价值变动损益
+- `$gain_on_reclassification_htm_to_afs`：持有至到期投资重分类为可供出售金融资产损益
+- `$effective_portion_of_cash_flow_hedges`：现金流量套期损益的有效部分
+- `$foreign_currency_translation_reserve`：外币财务报表折算差额
+- `$other_reclassifiable_oci`：可重分类其他综合收益中的其他项
+
+## 融资融券数据
+
+- `$fin_value`：融资余额（单位：元）
+- `$fin_buy_value`：融资买入额（单位：元）
+- `$fin_refund_value`：融资偿还额（单位：元）
+- `$sec_value`：融券余额（单位：元）
+- `$sec_sell_value`：融券卖出额（单位：元）
+- `$sec_refund_value`：融券偿还额（单位：元）
+- `$fin_sec_value`：融资融券总余额（单位：元），即融资余额与融券余额之和
+
+## 行情数据
+
+- `$open`：开盘价
+- `$high`：最高价
+- `$low`：最低价
+- `$close`：收盘价
+- `$factor`：复权因子，等于后复权价格除以不复权价格
+- `$volume`：成交量
+- `$turnover`：成交金额（单位：元）
+- `$turnover_rate`：换手率（单位：%）
+- `$is_paused`：是否停牌，0 表示未停牌，1 表示停牌
+- `$high_limit`：涨停价（单位：元）
+- `$low_limit`：跌停价（单位：元）
+- `$avg_price`：均价（单位：元）
+- `$prev_close`：前收盘价（单位：元）
+- `$quote_rate`：涨跌幅（单位：%）
+- `$amp_rate`：振幅（单位：%），计算公式为 (最高价 - 最低价) / 前收盘价
+- `$is_st`：是否为ST股票，0 表示否，1 表示是
+
+## 运营效率指标
+
+- `$inventory_turnover_ratio_ttm`：存货周转率TTM
+- `$receivables_turnover_ratio_ttm`：应收账款周转率TTM
+- `$payables_turnover_ratio_ttm`：应付账款周转率TTM
+- `$working_capital_turnover_ratio_ttm`：营运资本周转率TTM
+- `$current_assets_turnover_ratio_ttm`：流动资产周转率TTM
+- `$non_current_assets_turnover_ratio_ttm`：非流动资产周转率TTM
+- `$fixed_assets_turnover_ratio_ttm`：固定资产周转率TTM
+- `$total_assets_turnover_ratio_ttm`：总资产周转率TTM
+- `$operating_cycle_days`：营业周期
+- `$cash_conversion_cycle_days`：现金循环周期
+- `$days_of_inventory_outstanding`：存货周转天数
+- `$days_sales_outstanding`：应收账款周转天数
+- `$days_payable_outstanding`：应付账款周转天数
+- `$days_of_current_assets_turnover`：流动资产周转天数
+- `$inventory_turnover_ratio`：存货周转率
+- `$receivables_turnover_ratio`：应收账款周转率
+- `$payables_turnover_ratio`：应付账款周转率
+- `$current_assets_turnover_ratio`：流动资产周转率
+- `$fixed_assets_turnover_ratio`：固定资产周转率
+- `$total_assets_turnover_ratio`：总资产周转率
+
+## 业绩预告
+
+- `$net_profit_change_range_absolute`：预告净利润变动
+- `$net_profit_change_lower_bound`：预告净利润变动下限
+- `$net_profit_change_upper_bound`：预告净利润变动上限
+- `$net_profit_lower_bound`：预告净利润下限
+- `$net_profit_upper_bound`：预告净利润上限
+- `$eps_upper_bound`：预告eps上限
+- `$eps_lower_bound`：预告eps下限
+- `$eps_change_upper_bound`：预告eps变动上限
+- `$eps_change_lower_bound`：预告eps变动下限
+- `$operating_income_exclude_non_recurring_upper_bound`：预告扣除后营业收入上限
+- `$operating_income_exclude_non_recurring_lower_bound`：预告扣除后营业收入下限
+- `$net_profit_exclude_non_recurring_upper_bound`：预告扣非净利润上限
+- `$net_profit_exclude_non_recurring_lower_bound`：预告扣非净利润下限
+- `$net_profit_exclude_non_recurring_change_upper_bound`：预告扣非净利润变动上限
+- `$net_profit_exclude_non_recurring_change_lower_bound`：预告扣非净利润变动下限
+- `$operating_income_upper_bound`：预告营业收入上限
+- `$operating_income_lower_bound`：预告营业收入下限
+
+## 业绩快报
+
+- `$main_business_revenue`：主营业务收入
+- `$main_business_profit`：主营业务利润
+- `$profit_before_tax`：利润总额
+- `$net_profit_attributable_to_parent`：归属母公司股东的净利润
+- `$diluted_earnings_per_share`：摊薄每股收益EPS
+- `$basic_earnings_per_share`：基本每股收益EPS
+- `$annualized_diluted_return_on_equity`：全面摊薄净资产收益率ROE
+- `$weighted_average_return_on_equity`：加权净资产收益率ROE
+- `$total_assets`：总资产
+- `$net_assets`：净资产
+- `$net_profit_exclude_non_recurring_items_parent`：归属母公司股东的扣非净利润
+
+## 盈利能力指标
+
+- `$return_on_equity_ttm`：股东权益收益率(ROE)TTM
+- `$return_on_assets_ebit_ttm`：总资产报酬率（EBIT/总资产）TTM
+- `$return_on_assets_ttm`：总资产收益率(ROA)TTM
+- `$return_on_invested_capital_ttm`：投入资本回报率(ROIC)TTM
+- `$net_profit_margin_ttm`：销售净利率TTM
+- `$gross_profit_margin_ttm`：销售毛利率TTM
+- `$selling_general_administrative_expenses_ratio_ttm`：销售期间费用率TTM
+- `$selling_expense_ratio_ttm`：销售费用率TTM
+- `$administrative_expense_ratio_ttm`：管理费用率TTM
+- `$financial_expense_ratio_ttm`：财务费用率TTM
+- `$operating_profit_margin_ttm`：营业利润率TTM
+- `$ebit_margin_ttm`：息税前利润率TTM
+- `$cost_of_goods_sold_to_revenue_ratio_ttm`：营业总成本／营业总收入TTM
+- `$return_on_equity_average`：净资产收益率-平均(%)
+- `$return_on_equity_weighted`：净资产收益率-加权(%)
+- `$return_on_equity_diluted`：净资产收益率-摊薄(%)
+- `$return_on_equity_deduct_diluted`：净资产收益率-扣除/摊薄(%)
+- `$return_on_equity_exclude_non_recurring_items`：净资产收益率-扣除非经常损益(%)
+- `$return_on_equity_additional_share_offering`：净资产收益率-增发条件(%)
+- `$net_return_on_assets`：总资产净利率(%)
+- `$return_on_assets`：总资产报酬率(%)
+- `$return_on_invested_capital`：投入资本回报率(%)
+- `$return_on_equity_annualized`：净资产收益率-年化(%)
+- `$return_on_assets_annualized`：总资产报酬率-年化(%)
+- `$return_on_assets_net_profit_annualized`：总资产净利率-年化(%)
+- `$net_profit_margin`：销售净利率(%)
+- `$gross_profit_margin`：销售毛利率(%)
+- `$cost_of_goods_sold_to_revenue_ratio`：销售成本率(%)
+- `$selling_general_administrative_expenses_ratio`：销售期间费用率(%)
+- `$net_profit_to_total_revenue_ratio`：净利润／营业总收入(%)
+- `$operating_profit_to_total_revenue_ratio`：营业利润／营业总收入(%)
+- `$ebit_to_total_revenue_ratio`：息税前利润／营业总收入(%)
+- `$total_cost_to_total_revenue_ratio`：营业总成本／营业总收入(%)
+- `$selling_expense_to_total_revenue_ratio`：销售费用／营业总收入(%)
+- `$admin_and_rd_expense_to_total_revenue_ratio`：管理费用+研发费用／营业总收入(%)
+- `$financial_expense_to_total_revenue_ratio`：财务费用／营业总收入(%)
+
+## 估值指标
+
+- `$price_earnings_ratio_lyr`：市盈率LYR
+- `$price_earnings_ratio_mrq`：市盈率MRQ
+- `$price_earnings_ratio_ttm`：市盈率TTM
+- `$forecast_pe_historical`：预测市盈率(PE, 历史预测)
+- `$forecast_pe_next_12m`：预测市盈率(PE, 未来12个月)
+- `$static_pe_csi`：静态市盈率(中证发布)
+- `$rolling_pe_csi`：滚动市盈率(中证发布)
+- `$historical_peg`：历史PEG
+- `$forecast_peg`：预测PEG
+- `$price_book_ratio_mrq`：市净率MRQ
+- `$price_book_ratio_csi`：市净率(中证发布)
+- `$price_to_operating_cash_flow_lyr`：市现率(PCF, 经营现金流)LYR
+- `$price_to_operating_cash_flow_ttm`：市现率(PCF, 经营现金流)TTM
+- `$price_to_net_cash_flow_lyr`：市现率(PCF, 现金净流量)LYR
+- `$price_to_net_cash_flow_ttm`：市现率(PCF, 现金净流量)TTM
+- `$price_to_sales_ratio_lyr`：市销率LYR
+- `$price_to_sales_ratio_mrq`：市销率MRQ
+- `$price_to_sales_ratio_ttm`：市销率TTM
+- `$dividend_yield_ttm`：股息率TTM
+- `$total_market_value`：总市值(元)
+- `$market_value_by_security_type`：总市值(面向对象)(元)
+- `$market_value_csrc_method`：总市值(证监会算法)(元)
+- `$free_float_market_value`：流通市值(元)
+- `$enterprise_value_including_cash`：企业价值(含货币资金)(元)
+- `$enterprise_value_excluding_cash`：企业价值(剔除货币资金)(元)
+- `$enterprise_value_to_ebitda`：企业倍数
+- `$total_shares`：总股本(股)
+- `$free_float_shares`：流通股本(股)
+- `$a_share_total_shares`：A股总股本(股)
+- `$a_share_free_float_shares`：A股流通股本(股)

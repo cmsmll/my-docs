@@ -1,6 +1,11 @@
+# 依赖
 node_modules/
+
+# 构建产物与缓存（每个站点各自有 .vitepress/{dist,cache}）
+**/docs/.vitepress/dist/
+**/docs/.vitepress/cache/
 dist/
-docs/.vitepress/dist/
-docs/.vitepress/cache/
+
+# 杂项
 *.log
 .DS_Store

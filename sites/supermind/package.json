@@ -1,0 +1,20 @@
+{
+  "name": "supermind-help",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "同花顺 SuperMind 量化平台帮助文档——基于 VitePress 的文档站点",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "@vue/theme": "^2.4.0",
+    "markdown-it-mathjax3": "^4.3.2",
+    "vitepress": "^1.6.4"
+  },
+  "dependencies": {
+    "@doc/theme": "*"
+  }
+}
