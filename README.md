@@ -11,10 +11,12 @@
 | `/supermind/` | SuperMind 帮助文档（118 页） |
 
 新增文档集只需加内容目录 + 在 `docs/.vitepress/docs-registry.ts` 里加一条记录，
-文档列表、主页导航、该文档集的 header 与搜索范围都会自动生效。
+文档列表、该文档集的 header 与搜索范围都会自动生效（首页 header 的菜单已由 CSS 隐藏，
+详见下文「首页 header 的三栏布局」）。
 
 header 与搜索范围按文档集隔离：文档集页面显示自己的 header，搜索也只搜自身；
-主页显示全部文档集入口，并**可搜到所有文档**。
+首页可**搜到所有文档**，但其 header 是三栏（品牌 / 居中搜索框 / 主题按钮），
+不显示文档集入口——入口在页面正文的文档列表里。
 
 本工作区不绑定特定厂商：产品信息与所属厂商由各文档集自身声明。
 
@@ -58,10 +60,12 @@ document/
       ├─ sidebar-supermind.json          SuperMind 侧边栏（脚本生成，勿手改）
       └─ theme/
          ├─ index.ts        主题入口（navbar-title 换站点标题、按路由挂 .doc-home）
-         ├─ custom.css      补丁样式（首页 header 三栏、--vp-* 补齐、表格、打印）
+         ├─ custom.css      补丁样式（内容宽度、--vp-* 补齐、首页 header 三栏、表格、打印）
+         ├─ mergedRootSearchIndex.ts  首页「搜全部」的索引合并插件
          └─ components/
             ├─ DocList.vue  根页文档列表卡片
-            └─ Home.vue     文档集首页（数据由各集合 index.md 传入）
+            ├─ Home.vue     文档集首页（数据由各集合 index.md 传入）
+            └─ mergeIndexes.ts  两份本地搜索索引的合并（编号偏移重编号）
 ```
 
 ## 主题
@@ -81,6 +85,20 @@ document/
 
 - **不设 `cleanUrls`**：VitePress 2 起生成的链接已是无扩展名形式（`/ifind/guide/token`），客户端路由解析到磁盘的 `.html` 文件；产物布局仍是 `<page>.html`。
 - **代码块用深色单主题**（`markdown.theme: 'github-dark'`）：与 cn.vuejs.org 相同，浅色页面下代码块也是深底。
+
+### 内容宽度
+
+全站可见内容的宽度由 `custom.css` 里的 CSS 变量 `--doc-layout-width`（当前 `1080px`）统一控制。
+三处页面（根页、iFinD、SuperMind）的标题、描述、卡片区、简介区左右边缘完全对齐。
+
+有一条约定：**`max-width` 一律加在带 `padding` 的外框上，不加在内部文字元素上。**
+
+这曾经是个 bug——hero 的 `max-width` 加在标题/描述上，而卡片区/简介区加在带
+`padding: 0 32px` 的外框上，同一个变量算出两个结果（1080 vs 1016），hero 比下面宽出 64px。
+统一到外框后三处页面对齐。
+
+因此「外框 1080 / 可见内容 1016」是正常的，差额就是左右各 32px 留白；想让可见内容本身为
+1080，把变量改成 1144px 即可。
 
 ### header 与搜索范围
 

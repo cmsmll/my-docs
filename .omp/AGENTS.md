@@ -22,7 +22,9 @@
 - 运行时：Node `v24.11.0` / npm `11.6.1`；**`vitepress@2.0.0-alpha.20`** + `@vue/theme@2.4.0`
   （与 Vue 官方文档站同款组合；`@vue/theme` 的 peer 仍写 `^1.2.2`，装依赖会有 peer 警告，属已知）。
   V2 用 Vite 8（rolldown），config 走原生 loader：**相对 import 必须带扩展名**。
-- **非** git 远程托管项目（origin 指向用户的 GitHub 仓库，但推送由用户手动管理）。
+- **远程与分支**：`origin` 指向用户的 GitHub 仓库（`cmsmll/my-docs`），但推送由用户手动管理
+  ——**未获明确指示绝不 push**。`master` 是稳定线，日常工作在 `dev` 分支
+  （`origin/main` 落后于两者，是历史遗留的默认分支名，不必纠正）。
 
 **工作区不绑定厂商**：现有两个文档集恰好属于同一厂商，但这不是前提。根层（本文、根
 `README.md`、`package.json`）的描述保持中性，只讲「文档集 / 文档中心」；产品信息与所属厂商
@@ -73,10 +75,12 @@ document/
       ├─ sidebar-supermind.json         生成物（勿手改）
       └─ theme/
          ├─ index.ts        主题入口（navbar-title 换站点标题；按路由挂 .doc-home）
-         ├─ custom.css      补丁样式（--vp-* 补齐、首页 header 三栏、表格、打印）
+         ├─ custom.css      补丁样式（内容宽度、--vp-* 补齐、首页 header 三栏、表格、打印）
+         ├─ mergedRootSearchIndex.ts  首页「搜全部」的索引合并插件
          └─ components/
             ├─ DocList.vue  根页文档列表卡片（读 docs-registry.ts）
-            └─ Home.vue     文档集首页（hero/卡片/表格，数据由各集合传入）
+            ├─ Home.vue     文档集首页（hero/卡片/表格，数据由各集合传入）
+            └─ mergeIndexes.ts  两份本地搜索索引的合并（编号偏移重编号）
 ```
 
 ---
@@ -151,7 +155,26 @@ handler 里带着 `await scanForBuild()`，**索引就是在那一步扫出来�
 各 locale 的索引会变成空的 `{}`（32 字节），搜索彻底失效。另外 root 的 loader 只能遍历
 「各文档集」loader，不能遍历最终导出的映射对象自身，否则无限递归。
 
-### 3.5 首页 header 的三栏布局（与文档集页面隔离）
+### 3.5 内容宽度（单一真源）
+
+全站可见内容的宽度由 CSS 变量 `--doc-layout-width`（`custom.css` 的 `:root`，当前 `1080px`）
+统一控制。三处页面（根页 / ifind / supermind）的标题、描述、卡片区、简介区左右边缘必须对齐。
+
+**约定：`max-width` 一律加在带 `padding` 的外框上，不要加在内部文字元素上。**
+
+这条不是风格偏好，是踩过的 bug：两处加在不同层级会导致同一变量算出不同结果。
+`#hero` 曾把 `max-width` 加在标题/描述上（算出 1080），而卡片区/简介区加在带
+`padding: 0 32px` 的外框上（内容区只剩 1016），于是 hero 比下面宽出 64px。
+
+- 外框用 `max-width: var(--doc-layout-width)` + `margin: 0 auto` + 左右 `32px` padding。
+- 内部文字元素不再单独设 `max-width`（宽度由外框统一决定）。
+- 变量定义在 `:root`，组件 `scoped` 样式里的 `var()` 同样能取到。
+- Vue SFC 里的 `#hero` 是组件内 scoped 选择器，修改时注意它只作用于该组件。
+
+因此「外框 1080 / 可见内容 1016」是**正常且自洽**的：差额就是左右各 32px 留白。
+若想让可见内容本身达到 1080，把变量改成 1144px 即可（单点修改，padding 会自然内缩）。
+
+### 3.6 首页 header 的三栏布局（与文档集页面隔离）
 
 首页 header 是三栏：左品牌（「文档中心」原宽度）+ 中间居中搜索框 + 右侧仅主题按钮，**无导航
 菜单**。两个文档集页面与内容页的 header 必须保持主题原样，隔离是硬要求。
@@ -172,7 +195,7 @@ handler 里带着 `await scanForBuild()`，**索引就是在那一步扫出来�
 验证方式：`getBoundingClientRect()` 量 `.VPNavBar .container` 中心与 `.VPNavBarSearch` 中心是否
 相等（1440/1280/1024/768/375 五个宽度），并确认文档集页面 `.container` 仍是 `flex`、菜单仍在。
 
-### 3.6 主题能力边界
+### 3.7 主题能力边界
 
 - **侧边栏只有两级**：`@vue/theme` 的 `VPSidebarGroup` 只渲染「分组标题 + 平铺链接」，不支持
   再嵌套。写三层会渲染成**无 `href` 的假链接、页面全部丢失**。需要多个子分组时，把它们作为
@@ -185,7 +208,7 @@ handler 里带着 `await scanForBuild()`，**索引就是在那一步扫出来�
   引入时要**展开到顶层**（`...sidebarSupermind`）。
 - **大纲只收 level 2..4**：页内标题必须从 `##` 起，否则右侧「本页内容」是空的。
 
-### 3.7 路径不得依赖 cwd
+### 3.8 路径不得依赖 cwd
 
 不要用 `path.resolve('node_modules/...')` 这类相对 cwd 的写法；用
 `createRequire(import.meta.url)` 或 `fileURLToPath(import.meta.url)` 定位。config 里已按此实现。
@@ -279,6 +302,8 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 - **只有用户明确说「提交到远程 / push」时才推送**。默认**绝不**执行 `git push`，也不添加
   remote；远程由用户手动管理。
 - **一次提交只做一件事**：代码 + 相关文档/脚本同提交，不混入无关改动。
+- **改动都提交到 `dev` 分支**（`dev` 是工作分支，`master` 保持稳定、不要直接在上面提交）。
+  需要大改时先在 `dev` 上做，是否合并回 `master` 由用户决定——**合并同样要用户明确授权**。
 - **提交信息格式：Conventional Commits + 中文说明**。类型用 `feat` / `fix` / `refactor` /
   `docs` / `chore` / `test` / `style` / `perf` / `build` / `ci`，说明用中文：
   - `feat: 新增文档列表页与二级路由`
@@ -316,7 +341,8 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 - 大改动（如改路由结构）**必须**在动手前把技术前提验证清楚（读源码、做最小实验），
   不要凭猜测给用户选项。
 - 不移除、不改写用户未要求改动的内容；发现无关的既有问题，报告而不顺手改。
-- 不擅自升级依赖（`vitepress` 停在 1.6.x、`@vue/theme` 停在 2.4.x）；升级需先问。
+- 不擅自升级依赖（当前 `vitepress@2.0.0-alpha.20` + `@vue/theme@2.4.0`，见第一节的版本说明）；
+  升级需先问。注意 VitePress 2 仍是 alpha，升级前必须完整跑一遍构建与本文第六节的验证清单。
 - 不新增与本任务无关的依赖、脚本、CI 配置、格式化配置。
 - 交付时说明：改了什么、验证方式与结果、遗留问题与假设。
 
@@ -331,6 +357,8 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 - [ ] 若动了主题配置：**导航栏搜索框存在**、弹窗有背景与边框（验证搜索别名与 `--vp-*` 补齐）
 - [ ] 各文档集首页 `/ifind/`、`/supermind/` 是**纯落地页**：有 hero，**没有侧边栏**
 - [ ] 若动了导航/侧边栏：侧边栏链接可点（无 `href` 的假链接 = 层级超两级或键值是映射）
+- [ ] 若动了宽度/布局：三处页面（`/`、`/ifind/`、`/supermind/`）的标题、描述、卡片区、
+      简介区左右边缘对齐（外框 1080 / 可见内容 1016，差额是左右各 32px padding）
 - [ ] 若动了 header：首页 `/` 三栏成立（搜索框中心 == `.container` 中心，左右两轨等宽，
       **无导航菜单**、主题按钮可见）；`/ifind/`、`/supermind/` 与内容页 header 仍是主题原样
       （`.container` 为 `flex`、菜单条目完整）
