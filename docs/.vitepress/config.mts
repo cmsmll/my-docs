@@ -4,6 +4,7 @@ import { defineConfigWithTheme } from 'vitepress'
 import baseConfig from '@vue/theme/config'
 import type { Config as ThemeConfig } from '@vue/theme'
 import { collections, siteTitle } from './docs-registry.ts'
+import { mergedRootSearchIndex } from './theme/mergedRootSearchIndex.ts'
 import sidebarSupermind from './sidebar-supermind.json' with { type: 'json' }
 
 /**
@@ -99,8 +100,8 @@ const sidebar: ThemeConfig['sidebar'] = {
 }
 
 const themeConfig: ThemeConfig = {
-  nav,
-  sidebar,
+  // 说明：`nav` / `sidebar` 已移到下面的 `locales` 里逐文档集声明——locale 的 themeConfig
+  // 是整体替换而非深合并，所以每个 locale 都要自带这两项。此处只保留全站共用的配置。
 
   footer: {
     copyright: '文档中心 · 内容由各产品官方文档结构化转换生成',
@@ -132,6 +133,54 @@ export default defineConfigWithTheme<ThemeConfig>({
   description:
     '文档中心：汇总各产品的官方文档站点。当前收录 iFinD HTTP API 用户手册与 SuperMind 帮助文档。',
 
+  /**
+   * 按文档集分 header 与搜索范围。
+   *
+   * 两件事都靠 VitePress 原生的 locales 机制实现，没有自写导航组件：
+   *   - `resolveSiteDataByRoute` 会按当前路由的 locale 层叠 `themeConfig`，于是各文档集
+   *     能有各自的 `nav`（即「主页一份、ifind 一份、supermind 一份」）。
+   *   - 本地搜索的索引本来就没有全局一份，而是**按 locale 分别建索引**
+   *     （`getLocaleForPath` -> `indexByLocales`），所以各文档集天然只搜到自己。
+   *
+   * 两个必须遵守的约束（都踩过）：
+   *   1. locale 的 key **不能带斜杠**。内部把 key 拼成 `^/${key}/` 去匹配，而待匹配路径
+   *      已被补上前导斜杠，写成 `'/ifind/'` 会得到 `^//ifind//`，永不命中（表现为 nav 静默变空）。
+   *   2. locale 里的 `themeConfig` 是**整体替换**根 `themeConfig`，不是深合并。
+   *      所以每个 locale 都要把 `nav` 与 `sidebar` 一同写全。
+   *
+   * 主页（root）承载「搜全部」：`root` locale 的索引只含主页自身，因此用一个 Vite 插件
+   * 把 root 的搜索索引换成各 locale 索引的合并结果
+   * （见 theme/mergedRootSearchIndex.ts + theme/components/mergeIndexes.ts）。
+   * 各文档集的 loader 原样透传，所以它们的搜索范围不受影响。
+   */
+  locales: {
+    root: {
+      label: siteTitle,
+      themeConfig: {
+        // 主页导航：列出全部文档集
+        nav: [
+          { text: '文档列表', link: '/' },
+          ...collections.map((c) => ({ text: c.title, link: c.link })),
+        ],
+        sidebar,
+      },
+    },
+    // 各文档集：key 取目录名（不带斜杠），nav 取注册表里的详细条目
+    ...Object.fromEntries(
+      collections.map((c) => [
+        c.path,
+        {
+          label: c.title,
+          themeConfig: {
+            // 文档集内保留一个回主页的入口，其余为本文档集的详细条目
+            nav: [{ text: '文档列表', link: '/' }, ...c.nav],
+            sidebar,
+          },
+        },
+      ])
+    ),
+  },
+
   // baseConfig 预置的 /logo.svg 本站没有对应资源，换成主题色声明
   head: [['meta', { name: 'theme-color', content: '#42b883' }]],
 
@@ -155,6 +204,9 @@ export default defineConfigWithTheme<ThemeConfig>({
 
   vite: {
     ...baseConfig.vite,
+    // 主页「搜全部」：把 root locale 的搜索索引换成各文档集索引的合并结果。
+    // 各文档集本身不受影响，仍是各自独立的索引（只搜自身）。
+    plugins: [mergedRootSearchIndex(collections.map((c) => c.path))],
     ssr: {
       ...baseConfig.vite?.ssr,
       // @vue/theme 依赖 @vueuse/core v10，而 VitePress 2 依赖 v14；两份并存时

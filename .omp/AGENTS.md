@@ -85,10 +85,11 @@ document/
 
 ### 3.1 文档集注册表是唯一真源
 
-- 导航栏的文档集入口、根页的文档列表，**都只从 `docs/.vitepress/docs-registry.ts` 读**。
-- 新增文档集：建 `docs/<path>/` 内容目录 → 在注册表加一条记录 → （侧边栏按需）在
-  `config.mts` 里为该路径前缀加一组。**不要**把文档集信息写死在 `index.md` 的模板里或
-  `config.mts` 的 nav 数组中。
+- 根页的文档列表、导航栏入口、**各文档集的 header 导航**、搜索范围，**都只从
+  `docs/.vitepress/docs-registry.ts` 读**。
+- 新增文档集：建 `docs/<path>/` 内容目录 → 在注册表加一条记录（含 `nav`）→ 在
+  `config.mts` 的 `sidebar` 里为该路径前缀加一组。**不要**把文档集信息写死在 `index.md`
+  的模板里或 `config.mts` 的 nav 数组中。
 - 站点标题同样来自注册表的 `siteTitle`（主题入口引用它），不要在 `index.ts` 里重复写死。
 
 ### 3.2 路由与链接约定
@@ -124,7 +125,33 @@ document/
 **`markdown.math` 必须为 `true`**：SuperMind 正文含 LaTeX，关闭后公式里的 `{{ }}` 会被 Vue
 当成插值表达式导致构建失败。iFinD 正文不含 `$`，开启对它是无害的空操作。
 
-### 3.4 主题能力边界
+### 3.4 分文档集 header 与搜索范围（locales）
+
+header 与搜索范围靠 VitePress 原生 `locales` 实现，**没有自写导航组件**：
+
+- `resolveSiteDataByRoute` 按当前路由的 locale 层叠 `themeConfig`，各文档集因此有各自的 `nav`。
+- 本地搜索索引本就**按 locale 分别建**（`getLocaleForPath` -> `indexByLocales`），
+  所以各文档集天然只搜自身。
+
+两个必须遵守的约束（都踩过，会静默出错）：
+
+- **locale 的 key 不能带斜杠**。内部把 key 拼成 `^/${key}/` 去匹配，而待匹配路径已被补上前导
+  斜杠；写成 `'/ifind/'` 会得到 `^//ifind//`，永不命中——表现为 **nav 静默变空、索引不再分组**。
+  正确写法是目录名本身（`ifind`、`supermind`）。
+- **locale 里的 `themeConfig` 是整体替换，不是深合并**。每个 locale 都要把 `nav` 与 `sidebar`
+  一同写全，否则该 locale 下缺的那项会消失（例如只写 `nav` 会让侧边栏整个不见）。
+
+**主页「搜全部」** 由 `theme/mergedRootSearchIndex.ts` 实现：root locale 的索引只含主页自身，
+因此把 root 的 loader 换成「各文档集索引的合并结果」（`theme/components/mergeIndexes.ts` 负责
+按文档编号偏移重编号后合并——两份索引的内部编号都从 0 开始，直接展开会互相覆盖；且序列化索引
+不含原文，无法重新 `add()`）。各文档集 loader 原样透传，隔离不受影响。
+
+写这个插件时**必须用 `transform` 改写、不能用 `resolveId`/`load` 替换**：索引映射模块的 load
+handler 里带着 `await scanForBuild()`，**索引就是在那一步扫出来的**；替换掉模块会跳过它，
+各 locale 的索引会变成空的 `{}`（32 字节），搜索彻底失效。另外 root 的 loader 只能遍历
+「各文档集」loader，不能遍历最终导出的映射对象自身，否则无限递归。
+
+### 3.5 主题能力边界
 
 - **侧边栏只有两级**：`@vue/theme` 的 `VPSidebarGroup` 只渲染「分组标题 + 平铺链接」，不支持
   再嵌套。写三层会渲染成**无 `href` 的假链接、页面全部丢失**。需要多个子分组时，把它们作为
@@ -137,7 +164,7 @@ document/
   引入时要**展开到顶层**（`...sidebarSupermind`）。
 - **大纲只收 level 2..4**：页内标题必须从 `##` 起，否则右侧「本页内容」是空的。
 
-### 3.5 路径不得依赖 cwd
+### 3.6 路径不得依赖 cwd
 
 不要用 `path.resolve('node_modules/...')` 这类相对 cwd 的写法；用
 `createRequire(import.meta.url)` 或 `fileURLToPath(import.meta.url)` 定位。config 里已按此实现。
@@ -191,8 +218,10 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 
 1. 建内容目录 `docs/<path>/`，写 `index.md`（`page: true` + `Home` 组件，数据写在
    `<script setup>` 里）。
-2. 在 `docs/.vitepress/docs-registry.ts` 的 `collections` 加一条记录（`path`/`title`/
-   `description`/`tagline`/`link`/`tags`）。**导航与文档列表会自动出现。**
+2. 在 `docs/.vitepress/docs-registry.ts` 的 `collections` 加一条记录，含 `path`/`title`/
+   `description`/`tagline`/`link`/`tags`/**`nav`**（`nav` 即该文档集页面的 header 详细条目）。
+   **文档列表、主页导航、该文档集的 header、搜索范围都会自动生效**——`config.mts` 的
+   `locales` 由注册表生成，`path` 同时就是 locale 键。
 3. 在 `docs/.vitepress/config.mts` 的 `sidebar` 里加 `'/<path>/': [...]` 一组。
 4. `npm run docs:build` 验证。
 

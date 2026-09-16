@@ -10,7 +10,11 @@
 | `/ifind/` | iFinD HTTP API 用户手册（22 页） |
 | `/supermind/` | SuperMind 帮助文档（118 页） |
 
-新增文档集只需加内容目录 + 在 `docs/.vitepress/docs-registry.ts` 里加一条记录，文档列表与导航会自动出现。
+新增文档集只需加内容目录 + 在 `docs/.vitepress/docs-registry.ts` 里加一条记录，
+文档列表、主页导航、该文档集的 header 与搜索范围都会自动生效。
+
+header 与搜索范围按文档集隔离：文档集页面显示自己的 header，搜索也只搜自身；
+主页显示全部文档集入口，并**可搜到所有文档**。
 
 本工作区不绑定特定厂商：产品信息与所属厂商由各文档集自身声明。
 
@@ -77,6 +81,18 @@ document/
 
 - **不设 `cleanUrls`**：VitePress 2 起生成的链接已是无扩展名形式（`/ifind/guide/token`），客户端路由解析到磁盘的 `.html` 文件；产物布局仍是 `<page>.html`。
 - **代码块用深色单主题**（`markdown.theme: 'github-dark'`）：与 cn.vuejs.org 相同，浅色页面下代码块也是深底。
+
+### header 与搜索范围
+
+各文档集的 header 与搜索范围用 VitePress 原生 `locales` 实现（见 `config.mts` 的 `locales`）：
+
+- 文档集页面：header 是该文档集的详细条目，搜索**只命中自身**。
+- 主页：header 列出全部文档集，搜索**命中全部文档**（由 `theme/mergedRootSearchIndex.ts`
+  把各文档集索引合并后供给 root locale）。
+
+两个坑已写进 `AGENTS.md` §3.4：locale 键**不能带斜杠**（否则 nav 静默变空）、
+locale 里的 `themeConfig` 是**整体替换**（每个 locale 都要写全 `nav` 与 `sidebar`）。
+合并索引的插件必须用 `transform` 改写（替换会跳过索引扫描，索引变空）。
 
 ### 主题能力边界
 
