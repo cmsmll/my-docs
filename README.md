@@ -23,11 +23,16 @@ header 与搜索范围按文档集隔离：文档集页面显示自己的 header
 ## 开始使用
 
 ```bash
+git checkout dev     # 日常工作分支（main 为发布线）
 npm install          # 首次
 npm run docs:dev     # 本地预览（热更新）
 npm run docs:build   # 构建静态站点到 docs/.vitepress/dist
 npm run docs:preview # 预览构建产物
 ```
+
+分支：远程 `origin`（`cmsmll/my-docs`）有 `main` 与 `dev` 两个分支，`dev` 长期保留。
+日常改动提交到 `dev`；把 `dev` 合并到 `main` 时用快进（`git merge --ff-only dev`）保持
+线性历史。推送由仓库维护者手动执行。
 
 ## 目录结构
 
