@@ -37,6 +37,7 @@ npm run docs:preview:supermind
 document/
 ├─ package.json              工作区根（workspaces: packages/*, sites/*）
 ├─ .gitignore                忽略依赖、构建产物、缓存、__pycache__、task.md
+├─ .gitattributes            换行符规范（默认 LF，Windows 脚本 CRLF）
 ├─ .omp/AGENTS.md            AI 与会话规范（自动加载）
 ├─ task.md                   本地任务文件（临时，不入 git）
 ├─ packages/

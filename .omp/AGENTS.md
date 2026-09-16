@@ -200,6 +200,14 @@ python sites/supermind/source/verify_supermind.py sites/supermind/docs/.vitepres
   - 厂商标识只在**站点内**出现：站点 `README.md`、`config.mts` 的 `title`/`description`/
     `footer`、`docs/index.md` 文案。归属要写就写真实厂商，不要含糊。
   - 例外：站点正文里出现的厂商名属于**原文内容**（如官方文档原文），照抄不改。
+- **换行符由 `.gitattributes` 统一管理，不要依赖本机 `core.autocrlf`**：
+  - 默认 `* text=auto eol=lf`——仓库内与工作区一律 LF。
+  - Windows 脚本（`*.bat`/`*.cmd`/`*.ps1`/`*.psm1`/`*.psd1`/`*.vbs`/`*.reg`）强制 CRLF：
+    cmd.exe、PowerShell 对 LF 敏感（批处理的 `goto`/标签、续行符 `^` 在 LF 下会出错）。
+  - 新增此类脚本时无需改配置，规则已覆盖；新增**其他**需要 CRLF 的文件类型，才在
+    `.gitattributes` 里补一行并说明原因。
+  - 若改动后 `git status` 出现大量 `M` 但 `git diff` 无输出，是 index 的 stat 缓存问题，
+    用 `git add --renormalize .` 处理，不要逐文件重写。
 
 ---
 
