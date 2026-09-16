@@ -122,6 +122,9 @@ document/
 - **侧边栏只有两级**：`@vue/theme` 的 `VPSidebarGroup` 只渲染「分组标题 + 平铺链接」，不支持
   再嵌套。写三层会渲染成**无 `href` 的假链接、页面全部丢失**。需要多个子分组时，把它们作为
   **同一路径前缀下的多个 group**（参考 `/supermind/guide/other/`）。
+- **侧边栏键必须比文档集首页更深**：`getSidebar` 按前缀匹配，用 `/ifind/` 作键会把文档集
+  首页 `/ifind/`（`ifind/index.md`）也匹配进去，落地页被套上侧边栏、挤成「带侧边栏的文档页」。
+  键一律写到 `guide/`、`reference/` 这一层（如 `/ifind/guide/`、`/supermind/guide/other/`）。
 - **侧边栏配置值必须是数组**：`sidebar` 是「路径前缀 → 分组数组」的映射。把一张映射整体
   嵌到某个前缀下会让该键的值是对象而非数组，运行时报 `sidebar is not iterable`；从 JSON
   引入时要**展开到顶层**（`...sidebarSupermind`）。
@@ -269,6 +272,7 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 - [ ] 各文档集首页能打开，侧边栏链接数与内容页数一致
 - [ ] 若动了 supermind 内容：`verify_supermind.py` 三项指标均为 0
 - [ ] 若动了主题配置：**导航栏搜索框存在**、弹窗有背景与边框（验证搜索别名与 `--vp-*` 补齐）
+- [ ] 各文档集首页 `/ifind/`、`/supermind/` 是**纯落地页**：有 hero，**没有侧边栏**
 - [ ] 若动了导航/侧边栏：侧边栏链接可点（无 `href` 的假链接 = 层级超两级或键值是映射）
 - [ ] 代码块仍为深底 `#24292e` / 字色 `#e1e4e8`；iFinD 的 `{周期1}` 文本完整可见
 - [ ] 正文站内链接都带文档集前缀

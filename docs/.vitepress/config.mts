@@ -59,12 +59,17 @@ const nav: ThemeConfig['nav'] = [
 /**
  * 侧边栏：按 URL 前缀挂各文档集自己的目录（VitePress 内部按路径前缀取用）。
  *
- * 注意 supermind 的 sidebar-supermind.json 本身就是「路径键 → 分组数组」的映射
- * （键形如 `/supermind/guide/other/`），必须**展开到顶层**；把它整张嵌进
- * `/supermind/` 会让该键下的值是对象而非数组，运行时报 `sidebar is not iterable`。
+ * 两点必须注意：
+ *
+ * 1. **键要比文档集首页更深**。`getSidebar` 是前缀匹配，若用 `/ifind/` 作键，文档集首页
+ *    `/ifind/`（即 `ifind/index.md`）也会被匹配到，于是落地页被套上侧边栏、挤成「带侧边栏
+ *    的文档页」——结构就错了。所有键都写到 `guide/`、`reference/` 这一层。
+ * 2. **值必须是分组数组**。`sidebar-supermind.json` 本身是「路径键 → 分组数组」的映射，
+ *    必须**展开到顶层**；整张嵌进某个前缀下会让该键的值是对象而非数组，运行时报
+ *    `sidebar is not iterable`。
  */
 const sidebar: ThemeConfig['sidebar'] = {
-  '/ifind/': [
+  '/ifind/guide/': [
     {
       text: '一、TOKEN获取与使用',
       items: [{ text: '鉴权与取数流程', link: '/ifind/guide/token' }],
@@ -73,6 +78,8 @@ const sidebar: ThemeConfig['sidebar'] = {
       text: '二、各函数URL及formData生成逻辑',
       items: FN_PAGES.map(([slug, text]) => ({ text, link: `/ifind/guide/${slug}` })),
     },
+  ],
+  '/ifind/reference/': [
     {
       text: '附录',
       items: [
