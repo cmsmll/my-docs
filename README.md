@@ -36,12 +36,14 @@ npm run docs:preview:supermind
 ```
 document/
 ├─ package.json              工作区根（workspaces: packages/*, sites/*）
-├─ task.md                   工作区任务书
+├─ .gitignore                忽略依赖、构建产物、缓存、__pycache__、task.md
+├─ .omp/AGENTS.md            AI 与会话规范（自动加载）
+├─ task.md                   本地任务文件（临时，不入 git）
 ├─ packages/
 │  └─ theme/                 共享层 @doc/theme
 │     ├─ package.json        exports: "." / "./config" / "./components/Home.vue" / "./custom.css"
 │     ├─ index.ts            createTheme({ title, titleClass }) —— 主题入口
-│     ├─ config.ts           createSiteConfig({ title, nav, sidebar, footer, home, math })
+│     ├─ config.ts           createSiteConfig({ title, description, nav, sidebar, footer, math })
 │     ├─ custom.css          补丁样式（--vp-* 变量补齐、表格、打印等）
 │     └─ components/Home.vue 首页组件（布局与样式共享，文案由 props 传入）
 └─ sites/

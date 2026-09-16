@@ -44,7 +44,7 @@ document/
 ├─ .gitignore                忽略 node_modules / dist / cache / __pycache__
 ├─ README.md                 给人看的仓库说明
 ├─ .omp/AGENTS.md            本文件（omp 原生约定，每次会话自动加载）
-├─ task.md                   任务书（当前任务的提示词沉淀，不删）
+├─ task.md                   本地任务文件（临时，不入 git；见 .gitignore）
 │
 ├─ packages/
 │  └─ theme/                 共享层 @doc/theme —— 两站唯一的主题与配置真源
