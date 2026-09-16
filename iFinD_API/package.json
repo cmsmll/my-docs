@@ -1,0 +1,16 @@
+{
+  "name": "ifind-http-api-manual",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "description": "同花顺 iFinD HTTP API 用户手册（v2.1）——基于 VitePress 的文档站点",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "@vue/theme": "^2.4.0",
+    "vitepress": "^1.6.4"
+  }
+}
