@@ -3,17 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "文档开发工作区：多个产品文档站点共用同一套 @vue/theme 主题与构建配置",
-  "workspaces": [
-    "packages/*",
-    "sites/*"
-  ],
+  "description": "文档中心：汇总各产品官方文档的单站点（VitePress + @vue/theme）",
   "scripts": {
-    "docs:dev:ifind": "npm run docs:dev -w ifind-http-api-manual",
-    "docs:build:ifind": "npm run docs:build -w ifind-http-api-manual",
-    "docs:preview:ifind": "npm run docs:preview -w ifind-http-api-manual",
-    "docs:dev:supermind": "npm run docs:dev -w supermind-help",
-    "docs:build:supermind": "npm run docs:build -w supermind-help",
-    "docs:preview:supermind": "npm run docs:preview -w supermind-help"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "@vue/theme": "^2.4.0",
+    "markdown-it-mathjax3": "^4.3.2",
+    "vitepress": "^1.6.4"
   }
 }
