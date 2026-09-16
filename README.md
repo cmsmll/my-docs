@@ -10,18 +10,30 @@
 | `/ifind/` | iFinD HTTP API 用户手册（22 页） |
 | `/supermind/` | SuperMind 帮助文档（118 页） |
 
-新增文档集只需加内容目录 + 在 `docs/.vitepress/docs-registry.ts` 里加一条记录，文档列表与导航会自动出现。
+新增文档集只需加内容目录 + 在 `docs/.vitepress/docs-registry.ts` 里加一条记录，
+文档列表、该文档集的 header 与搜索范围都会自动生效（首页 header 的菜单已由 CSS 隐藏，
+详见下文「首页 header 的三栏布局」）。
+
+header 与搜索范围按文档集隔离：文档集页面显示自己的 header，搜索也只搜自身；
+首页可**搜到所有文档**，但其 header 是三栏（品牌 / 居中搜索框 / 主题按钮），
+不显示文档集入口——入口在页面正文的文档列表里。
 
 本工作区不绑定特定厂商：产品信息与所属厂商由各文档集自身声明。
 
 ## 开始使用
 
 ```bash
+git checkout dev     # 日常工作分支（main 为发布线）
 npm install          # 首次
 npm run docs:dev     # 本地预览（热更新）
 npm run docs:build   # 构建静态站点到 docs/.vitepress/dist
 npm run docs:preview # 预览构建产物
 ```
+
+分支：远程 `origin`（`cmsmll/my-docs`）有 `main` 与 `dev` 两个分支，`dev` 长期保留。
+日常改动提交到 `dev`；`main` 与 `dev` 各自成线，把 `dev` 合并到 `main` 时用
+`git merge --no-ff dev` 生成合并提交（**不要**用 `--ff-only` 快进，否则两者会变成一条直线、
+失去分叉）。推送由仓库维护者手动执行。
 
 ## 目录结构
 
@@ -53,11 +65,13 @@ document/
       ├─ docs-registry.ts               文档集注册表（全站唯一真源）
       ├─ sidebar-supermind.json          SuperMind 侧边栏（脚本生成，勿手改）
       └─ theme/
-         ├─ index.ts        主题入口（navbar-title 换成站点标题）
-         ├─ custom.css      补丁样式（--vp-* 变量补齐、表格、打印）
+         ├─ index.ts        主题入口（navbar-title 换站点标题、按路由挂 .doc-home）
+         ├─ custom.css      补丁样式（内容宽度、--vp-* 补齐、首页 header 三栏、表格、打印）
+         ├─ mergedRootSearchIndex.ts  首页「搜全部」的索引合并插件
          └─ components/
             ├─ DocList.vue  根页文档列表卡片
-            └─ Home.vue     文档集首页（数据由各集合 index.md 传入）
+            ├─ Home.vue     文档集首页（数据由各集合 index.md 传入）
+            └─ mergeIndexes.ts  两份本地搜索索引的合并（编号偏移重编号）
 ```
 
 ## 主题
@@ -77,6 +91,59 @@ document/
 
 - **不设 `cleanUrls`**：VitePress 2 起生成的链接已是无扩展名形式（`/ifind/guide/token`），客户端路由解析到磁盘的 `.html` 文件；产物布局仍是 `<page>.html`。
 - **代码块用深色单主题**（`markdown.theme: 'github-dark'`）：与 cn.vuejs.org 相同，浅色页面下代码块也是深底。
+
+### 内容宽度
+
+全站可见内容的宽度由 `custom.css` 里的 CSS 变量 `--doc-layout-width`（当前 `1080px`）统一控制。
+三处页面（根页、iFinD、SuperMind）的标题、描述、卡片区、简介区左右边缘完全对齐。
+
+有一条约定：**`max-width` 一律加在带 `padding` 的外框上，不加在内部文字元素上。**
+
+这曾经是个 bug——hero 的 `max-width` 加在标题/描述上，而卡片区/简介区加在带
+`padding: 0 32px` 的外框上，同一个变量算出两个结果（1080 vs 1016），hero 比下面宽出 64px。
+统一到外框后三处页面对齐。
+
+因此「外框 1080 / 可见内容 1016」是正常的，差额就是左右各 32px 留白；想让可见内容本身为
+1080，把变量改成 1144px 即可。
+
+### header 与搜索范围
+
+各文档集的 header 与搜索范围用 VitePress 原生 `locales` 实现（见 `config.mts` 的 `locales`）：
+
+- 文档集页面：header 是该文档集的详细条目，搜索**只命中自身**。
+- 主页（root locale）：搜索**命中全部文档**（由 `theme/mergedRootSearchIndex.ts`
+  把各文档集索引合并后供给 root locale）。其 `nav` 仍定义在 `config.mts`，但首页 header 已由
+  CSS 隐藏菜单（见下节），实际不可见；保留配置是为了 root locale 下其他路由仍有一致的导航。
+- **首页（`/`）另有一套三栏 header**，与上面两类隔离，见下节。
+
+两个坑已写进 `AGENTS.md` §3.4：locale 键**不能带斜杠**（否则 nav 静默变空）、
+locale 里的 `themeConfig` 是**整体替换**（每个 locale 都要写全 `nav` 与 `sidebar`）。
+合并索引的插件必须用 `transform` 改写（替换会跳过索引扫描，索引变空）。
+
+### 首页 header 的三栏布局
+
+首页 header 与两个文档集页面**完全隔离**：左品牌区（现状「文档中心」与宽度）+ 中间居中搜索框
++ 右侧仅主题切换按钮，去掉导航菜单。文档集页面 header 保持主题原样。
+
+实现分两处，**都不改主题组件**：
+
+1. `theme/index.ts` 按路由给最外层 `.VPApp` 挂 `.doc-home` 类（仅 `/`）。
+   主题没有按页面类型加类的钩子——VitePress 2 不消费 `frontmatter.pageClass`，而主题的
+   `.VPContentPage` 同时命中三个文档集首页与根页，不能当判据。
+2. `custom.css` 里以 `.VPApp.doc-home` 为前缀覆写布局（**所有规则都带该前缀**，这就是隔离）。
+
+两个关键点：
+
+- **居中靠 grid 的等宽轨道**，不是靠 `text-align`。`.container` 改为
+  `grid-template-columns: minmax(0,1fr) auto minmax(0,1fr)`，左右两轨由布局保证等宽，
+  中间搜索框自然落在容器正中；主题原本的 `flex + space-between` 会让搜索框位置取决于右侧
+  按钮宽度，必然偏移。为了让搜索框能单独进中间格，`.content` 设为 `display: contents`。
+- **导航栏左右内边距必须对称**。主题为「左对齐品牌 + 右对齐按钮」设计，左右内边距不等
+  （`24/12`、`≥768px` 时 `32/12`），会使容器中心与视口中心差 `(左-右)/2`；首页改成左右同值。
+
+另有两处必要的纠正：品牌区加 `justify-self: start`（否则 `1fr` 轨道的格子会拉伸，左侧
+1/3 全变成回首页的链接）；主题在 `<1280px` 隐藏主题按钮，首页无视该断点始终显示（否则
+窄屏无法切换主题）。
 
 ### 主题能力边界
 

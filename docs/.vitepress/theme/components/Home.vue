@@ -113,7 +113,13 @@ section {
   padding: 42px 32px;
 }
 
+/* 各区块共用同一几何：**外框** 1080px 居中、左右各 32px 留白内缩。
+   于是 hero 的文字与下面的卡片/正文左右边缘严格对齐（可见内容 1080 − 64 = 1016px）。
+   注意：max-width 必须加在这一层（带 padding 的外框），不能加在里面的文字上——
+   加在文字上会少算 padding，文字比下面宽出 64px。 */
 #hero {
+  max-width: var(--doc-layout-width);
+  margin: 0 auto;
   padding: 96px 32px;
   text-align: center;
 }
@@ -123,7 +129,6 @@ section {
   line-height: 1.25;
   font-weight: 900;
   letter-spacing: -1.5px;
-  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -135,8 +140,8 @@ html:not(.dark) .accent,
   -webkit-text-fill-color: transparent;
 }
 
+/* 宽度由 #hero 的外框统一控制，此处不再单独限制（否则会与下面区块错位）。 */
 .description {
-  max-width: 960px;
   line-height: 1.5;
   color: var(--vt-c-text-2);
   transition: color 0.5s;
@@ -208,14 +213,14 @@ html:not(.dark) .accent,
 }
 
 #highlights {
-  max-width: 1152px;
+  max-width: var(--doc-layout-width);
   margin: 0 auto;
 }
 
-/* 简介 / 版本记录：收进与上方卡片相同的 1152px 居中容器，
-   文字保持左对齐（原先铺满 1440px，与 hero、卡片都不对齐）。 */
+/* 简介 / 版本记录：与上方 hero 文字、卡片区共用同一个内容宽度，
+   文字保持左对齐。 */
 .home-doc-wrap {
-  max-width: 1152px;
+  max-width: var(--doc-layout-width);
   margin: 0 auto;
   padding: 0 32px;
 }

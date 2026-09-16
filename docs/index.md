@@ -22,7 +22,11 @@ import DocList from '@theme/components/DocList.vue'
 </div>
 
 <style scoped>
+/* 与文档集首页同一几何：外框 1080px、左右各 32px 内缩，
+   保证标题/描述与下面的卡片列表左右边缘对齐。 */
 #hero {
+  max-width: var(--doc-layout-width);
+  margin: 0 auto;
   padding: 84px 32px 28px;
   text-align: center;
 }
@@ -39,17 +43,17 @@ import DocList from '@theme/components/DocList.vue'
   -webkit-text-fill-color: transparent;
 }
 
+/* 宽度由 #hero 外框统一控制，此处不再单独限制。 */
 .description {
-  max-width: 720px;
   line-height: 1.6;
   color: var(--vt-c-text-2);
   font-size: 18px;
   margin: 18px auto 0;
 }
 
-/* 与文档集首页一致：内容收进 1152px 居中容器，文字左对齐 */
+/* 与文档集首页共用同一个内容宽度，文字左对齐 */
 .home-doc-wrap {
-  max-width: 1152px;
+  max-width: var(--doc-layout-width);
   margin: 0 auto;
   padding: 0 32px 64px;
 }

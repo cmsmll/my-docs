@@ -22,7 +22,10 @@
 - 运行时：Node `v24.11.0` / npm `11.6.1`；**`vitepress@2.0.0-alpha.20`** + `@vue/theme@2.4.0`
   （与 Vue 官方文档站同款组合；`@vue/theme` 的 peer 仍写 `^1.2.2`，装依赖会有 peer 警告，属已知）。
   V2 用 Vite 8（rolldown），config 走原生 loader：**相对 import 必须带扩展名**。
-- **非** git 远程托管项目（origin 指向用户的 GitHub 仓库，但推送由用户手动管理）。
+- **远程与分支**：远程 `origin`（`cmsmll/my-docs`）有 `main` 与 `dev` 两个分支，两者由用户
+  手动同步——**未获明确指示绝不 push**。`main` 是发布线，`dev` 是工作分支（两者各自独立成线、
+  长期保留，见 §5.1）。本地已无 `master`：早期它是本机 `git init` 的默认名
+  （系统级 `init.defaultBranch=master`），与远程 `main` 名字不一致，已重命名为 `main`。
 
 **工作区不绑定厂商**：现有两个文档集恰好属于同一厂商，但这不是前提。根层（本文、根
 `README.md`、`package.json`）的描述保持中性，只讲「文档集 / 文档中心」；产品信息与所属厂商
@@ -72,11 +75,13 @@ document/
       ├─ docs-registry.ts               文档集注册表（全站唯一真源）
       ├─ sidebar-supermind.json         生成物（勿手改）
       └─ theme/
-         ├─ index.ts        主题入口（navbar-title 换成站点标题）
-         ├─ custom.css      补丁样式（--vp-* 变量补齐、表格、打印）
+         ├─ index.ts        主题入口（navbar-title 换站点标题；按路由挂 .doc-home）
+         ├─ custom.css      补丁样式（内容宽度、--vp-* 补齐、首页 header 三栏、表格、打印）
+         ├─ mergedRootSearchIndex.ts  首页「搜全部」的索引合并插件
          └─ components/
             ├─ DocList.vue  根页文档列表卡片（读 docs-registry.ts）
-            └─ Home.vue     文档集首页（hero/卡片/表格，数据由各集合传入）
+            ├─ Home.vue     文档集首页（hero/卡片/表格，数据由各集合传入）
+            └─ mergeIndexes.ts  两份本地搜索索引的合并（编号偏移重编号）
 ```
 
 ---
@@ -85,10 +90,11 @@ document/
 
 ### 3.1 文档集注册表是唯一真源
 
-- 导航栏的文档集入口、根页的文档列表，**都只从 `docs/.vitepress/docs-registry.ts` 读**。
-- 新增文档集：建 `docs/<path>/` 内容目录 → 在注册表加一条记录 → （侧边栏按需）在
-  `config.mts` 里为该路径前缀加一组。**不要**把文档集信息写死在 `index.md` 的模板里或
-  `config.mts` 的 nav 数组中。
+- 根页的文档列表、导航栏入口、**各文档集的 header 导航**、搜索范围，**都只从
+  `docs/.vitepress/docs-registry.ts` 读**。
+- 新增文档集：建 `docs/<path>/` 内容目录 → 在注册表加一条记录（含 `nav`）→ 在
+  `config.mts` 的 `sidebar` 里为该路径前缀加一组。**不要**把文档集信息写死在 `index.md`
+  的模板里或 `config.mts` 的 nav 数组中。
 - 站点标题同样来自注册表的 `siteTitle`（主题入口引用它），不要在 `index.ts` 里重复写死。
 
 ### 3.2 路由与链接约定
@@ -124,7 +130,73 @@ document/
 **`markdown.math` 必须为 `true`**：SuperMind 正文含 LaTeX，关闭后公式里的 `{{ }}` 会被 Vue
 当成插值表达式导致构建失败。iFinD 正文不含 `$`，开启对它是无害的空操作。
 
-### 3.4 主题能力边界
+### 3.4 分文档集 header 与搜索范围（locales）
+
+header 与搜索范围靠 VitePress 原生 `locales` 实现，**没有自写导航组件**：
+
+- `resolveSiteDataByRoute` 按当前路由的 locale 层叠 `themeConfig`，各文档集因此有各自的 `nav`。
+- 本地搜索索引本就**按 locale 分别建**（`getLocaleForPath` -> `indexByLocales`），
+  所以各文档集天然只搜自身。
+
+两个必须遵守的约束（都踩过，会静默出错）：
+
+- **locale 的 key 不能带斜杠**。内部把 key 拼成 `^/${key}/` 去匹配，而待匹配路径已被补上前导
+  斜杠；写成 `'/ifind/'` 会得到 `^//ifind//`，永不命中——表现为 **nav 静默变空、索引不再分组**。
+  正确写法是目录名本身（`ifind`、`supermind`）。
+- **locale 里的 `themeConfig` 是整体替换，不是深合并**。每个 locale 都要把 `nav` 与 `sidebar`
+  一同写全，否则该 locale 下缺的那项会消失（例如只写 `nav` 会让侧边栏整个不见）。
+
+**主页「搜全部」** 由 `theme/mergedRootSearchIndex.ts` 实现：root locale 的索引只含主页自身，
+因此把 root 的 loader 换成「各文档集索引的合并结果」（`theme/components/mergeIndexes.ts` 负责
+按文档编号偏移重编号后合并——两份索引的内部编号都从 0 开始，直接展开会互相覆盖；且序列化索引
+不含原文，无法重新 `add()`）。各文档集 loader 原样透传，隔离不受影响。
+
+写这个插件时**必须用 `transform` 改写、不能用 `resolveId`/`load` 替换**：索引映射模块的 load
+handler 里带着 `await scanForBuild()`，**索引就是在那一步扫出来的**；替换掉模块会跳过它，
+各 locale 的索引会变成空的 `{}`（32 字节），搜索彻底失效。另外 root 的 loader 只能遍历
+「各文档集」loader，不能遍历最终导出的映射对象自身，否则无限递归。
+
+### 3.5 内容宽度（单一真源）
+
+全站可见内容的宽度由 CSS 变量 `--doc-layout-width`（`custom.css` 的 `:root`，当前 `1080px`）
+统一控制。三处页面（根页 / ifind / supermind）的标题、描述、卡片区、简介区左右边缘必须对齐。
+
+**约定：`max-width` 一律加在带 `padding` 的外框上，不要加在内部文字元素上。**
+
+这条不是风格偏好，是踩过的 bug：两处加在不同层级会导致同一变量算出不同结果。
+`#hero` 曾把 `max-width` 加在标题/描述上（算出 1080），而卡片区/简介区加在带
+`padding: 0 32px` 的外框上（内容区只剩 1016），于是 hero 比下面宽出 64px。
+
+- 外框用 `max-width: var(--doc-layout-width)` + `margin: 0 auto` + 左右 `32px` padding。
+- 内部文字元素不再单独设 `max-width`（宽度由外框统一决定）。
+- 变量定义在 `:root`，组件 `scoped` 样式里的 `var()` 同样能取到。
+- Vue SFC 里的 `#hero` 是组件内 scoped 选择器，修改时注意它只作用于该组件。
+
+因此「外框 1080 / 可见内容 1016」是**正常且自洽**的：差额就是左右各 32px 留白。
+若想让可见内容本身达到 1080，把变量改成 1144px 即可（单点修改，padding 会自然内缩）。
+
+### 3.6 首页 header 的三栏布局（与文档集页面隔离）
+
+首页 header 是三栏：左品牌（「文档中心」原宽度）+ 中间居中搜索框 + 右侧仅主题按钮，**无导航
+菜单**。两个文档集页面与内容页的 header 必须保持主题原样，隔离是硬要求。
+
+- 判据用 `.VPApp.doc-home`，由 `theme/index.ts` 按路由挂（仅 `/`，兼容 `/index.html`）。
+  **不要**改用主题的 `.VPContentPage`：它同时命中根页与两个文档集首页，无法区分；VitePress 2
+  也不消费 `frontmatter.pageClass`。用类而非 CSS `:has()`，是为了让 header 样式不依赖内容区组件结构。
+- **所有首页 header 规则都必须带 `.VPApp.doc-home` 前缀**，这是隔离的唯一保证。
+- **居中靠 grid 等宽轨道**：`.container` 用 `grid-template-columns: minmax(0,1fr) auto minmax(0,1fr)`，
+  左右两轨由布局保证等宽，中间搜索框自然居中。用主题的 `flex + space-between` 时搜索框位置取决于
+  右侧按钮宽度，**必然偏移**。为把搜索框单独放进中间格，`.content` 设为 `display: contents`。
+- **导航栏左右内边距必须对称**：主题是按「左对齐品牌 + 右对齐按钮」设计的，左右不等（`24/12`，
+  `≥768px` 为 `32/12`），会让容器中心偏离视口中心 `(左-右)/2`。首页用左右同值。
+- 两处易漏：品牌区需 `justify-self: start`，否则作为 grid 格子会拉伸到整条 `1fr` 轨道，
+  **左侧 1/3 全变成回首页链接**；主题在 `<1280px` 隐藏主题按钮（改在「更多」浮层里），
+  首页要无视该断点始终显示，否则窄屏无法切换主题。
+
+验证方式：`getBoundingClientRect()` 量 `.VPNavBar .container` 中心与 `.VPNavBarSearch` 中心是否
+相等（1440/1280/1024/768/375 五个宽度），并确认文档集页面 `.container` 仍是 `flex`、菜单仍在。
+
+### 3.7 主题能力边界
 
 - **侧边栏只有两级**：`@vue/theme` 的 `VPSidebarGroup` 只渲染「分组标题 + 平铺链接」，不支持
   再嵌套。写三层会渲染成**无 `href` 的假链接、页面全部丢失**。需要多个子分组时，把它们作为
@@ -137,7 +209,7 @@ document/
   引入时要**展开到顶层**（`...sidebarSupermind`）。
 - **大纲只收 level 2..4**：页内标题必须从 `##` 起，否则右侧「本页内容」是空的。
 
-### 3.5 路径不得依赖 cwd
+### 3.8 路径不得依赖 cwd
 
 不要用 `path.resolve('node_modules/...')` 这类相对 cwd 的写法；用
 `createRequire(import.meta.url)` 或 `fileURLToPath(import.meta.url)` 定位。config 里已按此实现。
@@ -191,8 +263,10 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 
 1. 建内容目录 `docs/<path>/`，写 `index.md`（`page: true` + `Home` 组件，数据写在
    `<script setup>` 里）。
-2. 在 `docs/.vitepress/docs-registry.ts` 的 `collections` 加一条记录（`path`/`title`/
-   `description`/`tagline`/`link`/`tags`）。**导航与文档列表会自动出现。**
+2. 在 `docs/.vitepress/docs-registry.ts` 的 `collections` 加一条记录，含 `path`/`title`/
+   `description`/`tagline`/`link`/`tags`/**`nav`**（`nav` 即该文档集页面的 header 详细条目）。
+   **文档列表、主页导航、该文档集的 header、搜索范围都会自动生效**——`config.mts` 的
+   `locales` 由注册表生成，`path` 同时就是 locale 键。
 3. 在 `docs/.vitepress/config.mts` 的 `sidebar` 里加 `'/<path>/': [...]` 一组。
 4. `npm run docs:build` 验证。
 
@@ -229,6 +303,14 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 - **只有用户明确说「提交到远程 / push」时才推送**。默认**绝不**执行 `git push`，也不添加
   remote；远程由用户手动管理。
 - **一次提交只做一件事**：代码 + 相关文档/脚本同提交，不混入无关改动。
+- **工作分支是 `dev`**（本地与远程同名，均有跟踪）。日常改动的提交都落在 `dev`，
+  **不要**直接提交到 `main`，也不要删除或改写已推送的分支（远程 `dev` 是长期分支，
+  必须保留其记录——合并后**不要**删它）。把 `dev` 合并到 `main`、以及推送到远程，
+  都要用户明确授权。
+- **`main` 与 `dev` 各自独立成线，合并用 `--no-ff`（不用快进）**。两条分支都有对方没有的
+  提交，因此合并会产生一个双亲的合并提交，图上能看到分叉。**不要**用 `--ff-only` 把 `dev`
+  快进到 `main`：那会让 `main` 永远停在 `dev` 的直线上，失去分叉，且之后想分开只能改写
+  历史（force push）。`main` 上可留一个标记基线用的空提交（`--allow-empty`）作为分叉点。
 - **提交信息格式：Conventional Commits + 中文说明**。类型用 `feat` / `fix` / `refactor` /
   `docs` / `chore` / `test` / `style` / `perf` / `build` / `ci`，说明用中文：
   - `feat: 新增文档列表页与二级路由`
@@ -266,7 +348,8 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 - 大改动（如改路由结构）**必须**在动手前把技术前提验证清楚（读源码、做最小实验），
   不要凭猜测给用户选项。
 - 不移除、不改写用户未要求改动的内容；发现无关的既有问题，报告而不顺手改。
-- 不擅自升级依赖（`vitepress` 停在 1.6.x、`@vue/theme` 停在 2.4.x）；升级需先问。
+- 不擅自升级依赖（当前 `vitepress@2.0.0-alpha.20` + `@vue/theme@2.4.0`，见第一节的版本说明）；
+  升级需先问。注意 VitePress 2 仍是 alpha，升级前必须完整跑一遍构建与本文第六节的验证清单。
 - 不新增与本任务无关的依赖、脚本、CI 配置、格式化配置。
 - 交付时说明：改了什么、验证方式与结果、遗留问题与假设。
 
@@ -281,6 +364,11 @@ python source/verify_supermind.py docs/.vitepress/dist      # 校验
 - [ ] 若动了主题配置：**导航栏搜索框存在**、弹窗有背景与边框（验证搜索别名与 `--vp-*` 补齐）
 - [ ] 各文档集首页 `/ifind/`、`/supermind/` 是**纯落地页**：有 hero，**没有侧边栏**
 - [ ] 若动了导航/侧边栏：侧边栏链接可点（无 `href` 的假链接 = 层级超两级或键值是映射）
+- [ ] 若动了宽度/布局：三处页面（`/`、`/ifind/`、`/supermind/`）的标题、描述、卡片区、
+      简介区左右边缘对齐（外框 1080 / 可见内容 1016，差额是左右各 32px padding）
+- [ ] 若动了 header：首页 `/` 三栏成立（搜索框中心 == `.container` 中心，左右两轨等宽，
+      **无导航菜单**、主题按钮可见）；`/ifind/`、`/supermind/` 与内容页 header 仍是主题原样
+      （`.container` 为 `flex`、菜单条目完整）
 - [ ] 代码块仍为深底 `#24292e` / 字色 `#e1e4e8`；iFinD 的 `{周期1}` 文本完整可见
 - [ ] 正文站内链接都带文档集前缀
 - [ ] `git status` 干净，改动已按 5.1 提交
